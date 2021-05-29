@@ -34,7 +34,10 @@ OnlineMapUpdater::OnlineMapUpdater() {
     set_params();
     // Setting prebuilt map
     pcl::PointCloud<pcl::PointXYZI>::Ptr ptr_map(new pcl::PointCloud<pcl::PointXYZI>);
-    erasor_utils::load_pcd(map_name, ptr_map);
+    int failure_flag = erasor_utils::load_pcd(map_name, ptr_map);
+    if (failure_flag == -1){
+        throw invalid_argument("Maybe intiial map path is not correct!");
+    }
     std::cout << "Loading complete" << std::endl;
     num_pcs_init = ptr_map->points.size();
     map_init     = *ptr_map;
@@ -81,7 +84,7 @@ void OnlineMapUpdater::set_params() {
     nh.param("/MapUpdater/removal_interval", removal_interval, 2);
     nh.param<std::string>("/MapUpdater/data_name", data_name, "00");
     nh.param<std::string>("/MapUpdater/env", environment, "outdoor");
-    nh.param<std::string>("/MapUpdater/filename", map_name, "/");
+    nh.param<std::string>("/MapUpdater/initial_map_path", map_name, "/");
     nh.param<std::string>("/MapUpdater/save_path", save_path, "/");
 
 
@@ -130,7 +133,7 @@ void OnlineMapUpdater::callback_flag(const std_msgs::Float32::ConstPtr &msg) {
     mapOut.height = 1;
     std::cout << "Voxelization operated with " << msg->data << " voxel size" << std::endl;
     pcl::io::savePCDFileASCII(save_path + "/" + data_name + "_result.pcd", mapOut);
-    std::cout << "Complete to save the final static map" << std::endl;
+    std::cout << "\033[1;32mComplete to save the final static map\033[0m" << std::endl;
 }
 
 /**

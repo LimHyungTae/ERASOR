@@ -1,9 +1,16 @@
 import pypcd
 from tqdm import tqdm
 import numpy as np
-from semantic_kitti_utils import *
+
 from sklearn.neighbors import NearestNeighbors
 from tabulate import tabulate
+
+def intensity2labels(intensity_np):
+    label = intensity_np.astype(np.uint32)
+    sem_label = label & 0xFFFF  # semantic label in lower half
+    inst_label = label >> 16  # instance id in upper half
+    return sem_label, inst_label
+
 DYNAMIC_CLASSES = [252, 253, 254, 255, 256, 257, 259]
 
 def fetch_dynamic_objects_ids(intensity_np):

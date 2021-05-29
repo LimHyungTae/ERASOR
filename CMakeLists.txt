@@ -89,10 +89,9 @@ add_executable(offline_map_updater src/online_map_updater/erasor_main.cpp ${eras
 target_link_libraries(offline_map_updater ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 add_dependencies(offline_map_updater erasor_generate_messages_cpp)
 
-add_executable(compare_map src/compare_map.cpp)
+add_executable(compare_map src/compare_map.cpp src/online_map_updater/src/erasor_utils.cpp)
 target_link_libraries(compare_map ${catkin_LIBRARIES})
 
-#
-#add_executable(kitti_mapgen src/mapgen/main.cpp src/mapgen/mapgen.hpp)
-#target_link_libraries(kitti_mapgen ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
-#add_dependencies(kitti_mapgen erasor_generate_messages_cpp)
+add_executable(kitti_mapgen src/mapgen/main.cpp src/mapgen/mapgen.hpp src/online_map_updater/src/erasor_utils.cpp)
+target_link_libraries(kitti_mapgen ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+add_dependencies(kitti_mapgen erasor_generate_messages_cpp)

@@ -14,6 +14,7 @@
 #include <memory>
 
 #include <ros/ros.h>
+#include <pcl/common/common.h>
 #include <pcl/common/centroid.h>
 #include <pcl/common/transforms.h>
 #include <pcl_conversions/pcl_conversions.h>
@@ -39,9 +40,11 @@
 #include <geometry_msgs/Point.h>
 #include <geometry_msgs/Point32.h>
 #include <nav_msgs/Path.h>
+#include <nav_msgs/Odometry.h>
 #include <sensor_msgs/PointCloud2.h>
 #include <tf/transform_broadcaster.h>
 #include <std_msgs/Float32.h>
+#include <std_msgs/Int32.h>
 
 namespace erasor_utils {
     template<typename T>

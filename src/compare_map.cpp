@@ -42,23 +42,23 @@ int main(int argc, char **argv)
     std::cout<<"\033[1;32mLoading map..."<<std::endl;
     // load original src
     pcl::PointCloud<pcl::PointXYZI>::Ptr ptrSrc(new pcl::PointCloud<pcl::PointXYZI>);
-    load_pcd(rawName, ptrSrc);
+    erasor_utils::load_pcd(rawName, ptrSrc);
 
     // Removert
     pcl::PointCloud<pcl::PointXYZI>::Ptr ptrOcto(new pcl::PointCloud<pcl::PointXYZI>);
-    load_pcd(octoMapName, ptrOcto);
+    erasor_utils::load_pcd(octoMapName, ptrOcto);
 
     // pplremover
     pcl::PointCloud<pcl::PointXYZI>::Ptr ptrPpl(new pcl::PointCloud<pcl::PointXYZI>);
-    load_pcd(pplName, ptrPpl);
+    erasor_utils::load_pcd(pplName, ptrPpl);
 
     // Removert
     pcl::PointCloud<pcl::PointXYZI>::Ptr ptrRemovert(new pcl::PointCloud<pcl::PointXYZI>);
-    load_pcd(removertName, ptrRemovert);
+    erasor_utils::load_pcd(removertName, ptrRemovert);
 
     // Erasor
     pcl::PointCloud<pcl::PointXYZI>::Ptr ptrErasor(new pcl::PointCloud<pcl::PointXYZI>);
-    load_pcd(erasorName, ptrErasor);
+    erasor_utils::load_pcd(erasorName, ptrErasor);
     std::cout<<"\033[1;32mLoad complete \033[0m"<<std::endl;
 
     ////////////////////////////////////////////////////////////////////
@@ -68,22 +68,22 @@ int main(int argc, char **argv)
     pcl::PointCloud<pcl::PointXYZI> removertStatic, removertDynamic;
     pcl::PointCloud<pcl::PointXYZI> erasorStatic, erasorDynamic;
 
-    parse_dynamic_obj(*ptrErasor, erasorDynamic, erasorStatic);
-    parse_dynamic_obj(*ptrRemovert, removertDynamic, removertStatic);
-    parse_dynamic_obj(*ptrPpl, pplDynamic, pplStatic);
-    parse_dynamic_obj(*ptrOcto, octoDynamic, octoStatic);
-    parse_dynamic_obj(*ptrSrc, mapDynamic, mapStatic);
+    erasor_utils::parse_dynamic_obj(*ptrErasor, erasorDynamic, erasorStatic);
+    erasor_utils::parse_dynamic_obj(*ptrRemovert, removertDynamic, removertStatic);
+    erasor_utils::parse_dynamic_obj(*ptrPpl, pplDynamic, pplStatic);
+    erasor_utils::parse_dynamic_obj(*ptrOcto, octoDynamic, octoStatic);
+    erasor_utils::parse_dynamic_obj(*ptrSrc, mapDynamic, mapStatic);
 
-    auto esmsg = cloud2msg(erasorStatic);
-    auto edmsg = cloud2msg(erasorDynamic);
-    auto rsmsg = cloud2msg(removertStatic);
-    auto rdmsg = cloud2msg(removertDynamic);
-    auto psmsg = cloud2msg(pplStatic);
-    auto pdmsg = cloud2msg(pplDynamic);
-    auto osmsg = cloud2msg(octoStatic);
-    auto odmsg = cloud2msg(octoDynamic);
-    auto msmsg = cloud2msg(mapStatic);
-    auto mdmsg = cloud2msg(mapDynamic);
+    auto esmsg = erasor_utils::cloud2msg(erasorStatic);
+    auto edmsg = erasor_utils::cloud2msg(erasorDynamic);
+    auto rsmsg = erasor_utils::cloud2msg(removertStatic);
+    auto rdmsg = erasor_utils::cloud2msg(removertDynamic);
+    auto psmsg = erasor_utils::cloud2msg(pplStatic);
+    auto pdmsg = erasor_utils::cloud2msg(pplDynamic);
+    auto osmsg = erasor_utils::cloud2msg(octoStatic);
+    auto odmsg = erasor_utils::cloud2msg(octoDynamic);
+    auto msmsg = erasor_utils::cloud2msg(mapStatic);
+    auto mdmsg = erasor_utils::cloud2msg(mapDynamic);
 
     ros::Rate loop_rate(2);
     static int count_ = 0;
