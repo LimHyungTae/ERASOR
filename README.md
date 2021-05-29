@@ -13,7 +13,9 @@ We provide all contents including
 
 So enjoy our codes! :)
 
-(***PLEASE REMIND THAT THIS REPO IS IN PROGRESS!! Maybe it will be completed by ~6/6***)
+(***PLEASE REMIND THAT THIS REPO IS IN PROGRESS!! Maybe it will be completed by ~6/6***
+
+So, :warning: implies that code is already in this repo but the explanation is not elaborated)
 
 Contact: Hyungtae Lim (shapelim@kaist.ac.kr)
 
@@ -109,7 +111,7 @@ roscore # (Optional)
 roslaunch erasor mapgen.launch
 rosbag play 05_2350_to_2670_w_interval_2_node.bag
 ```
-* Then, dense map and voxelized map are auto-saved at the `save path`. Note that the dense map is used to fill corresponding labels (**To be explained**). The voxelized map will be an input of step 2 as a naively accumulated map.
+* Then, dense map and voxelized map are auto-saved at the `save path`. Note that the dense map is used to fill corresponding labels (:warning: **To be explained**). The voxelized map will be an input of step 2 as a naively accumulated map.
 
 **Step 2. Run ERASOR**
 ![erasor](img/kitti05.gif)
@@ -133,12 +135,14 @@ rostopic pub /saveflag std_msgs/Float32 "data: 0.2"
 
 ## Calculate PR/RR
 
-TBU: The code is already in this repository, yet the explanation is incomplete.
+:warning: TBU: The code is already in this repository, yet the explanation is incomplete.
 ```bash
 python analysis.py
 ```
 
 ## Benchmark
+
+:warning:
 
 - Error metrics are a little bit different from those in the paper:
   
@@ -153,7 +157,7 @@ python analysis.py
 
 ## Run Your Own Code
 
-TBU: The code is already in this repository, yet the explanation is incomplete.
+:warning: TBU: The code is already in this repository, yet the explanation is incomplete.
 
 ## Visualization of All the State-of-the-arts
 
