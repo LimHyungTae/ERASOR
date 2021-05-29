@@ -142,14 +142,14 @@ python analysis.py
 
 - Error metrics are a little bit different from those in the paper:
   
-  | Seq.    |  PR  |  RR|
+  | Seq.    |  PR [%] |  RR [%] |
   |-----------------------------|:-----:|:-----:|
   | 00  | 91.72 | 97.00 |
   | 01  | 91.93 | 94.63 |
   | 02  | 81.08 | 99.11 |
   | 05  | 86.98 | 97.88 |
   | 07  | 92.00 | 98.33 |
-- But we provide all pcd files! Don't worry. See [Visualization of All the State-of-the-arts](#Visualization of All the State-of-the-arts) Section.
+- But we provide all pcd files! Don't worry. See [Visualization of All the State-of-the-arts](#Visualization-of-All-the-State-of-the-arts) Section.
 
 ## Run Your Own Code
 
