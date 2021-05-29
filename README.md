@@ -1,4 +1,4 @@
-# ERASOR.Official
+# :rainbow: ERASOR.Official
 
 Official page of [*"ERASOR: Egocentric Ratio of Pseudo Occupancy-based Dynamic Object Removal for Static 3D Point Cloud Map Building"*](https://arxiv.org/abs/2103.04316), which is accepted by RA-L with ICRA'21 option [[Demo Video](https://www.youtube.com/watch?v=Nx27ZO8afm0)].
 
@@ -6,10 +6,10 @@ Official page of [*"ERASOR: Egocentric Ratio of Pseudo Occupancy-based Dynamic O
 
 We provide all contents including
 
--[x] Source code of ERASOR
--[x] All outputs of the State-of-the-arts
--[x] Visualization
--[x] Calculation code of Preservation Rate/Rejection Rate
+- [x] Source code of ERASOR
+- [x] All outputs of the State-of-the-arts
+- [x] Visualization
+- [x] Calculation code of Preservation Rate/Rejection Rate
 
 So enjoy our codes! :)
 
@@ -20,13 +20,13 @@ Contact: Hyungtae Lim (shapelim@kaist.ac.kr)
 Advisor: Hyun Myung (hmyung@kaist.ac.kr)
 
 ## Contents
-0. [Test Env.](#Test Env.)
+0. [Test Env.](#Test-Env.)
 0. [Requirements](#requirements)
-0. [How to Run ERASOR](#How to Run ERASOR)
-0. [Calculate PR/RR](#Calculate PR/RR)
+0. [How to Run ERASOR](#How-to-Run-ERASOR)
+0. [Calculate PR/RR](#Calculate0PR/RR)
 0. [Benchmark](#benchmark)
-0. [Run Your Own Code](#Run Your Own Code)
-0. [Visualization of All the State-of-the-arts](#Visualization of All the State-of-the-arts)
+0. [Run Your Own Code](#Run-Your-Own-Code)
+0. [Visualization of All the State-of-the-arts](#Visualization-of-All-the-State-of-the-arts)
 0. [Citation](#citation)
 
 ### Test Env.
