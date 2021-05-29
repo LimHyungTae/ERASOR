@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package>
+  <name>erasor</name>
+  <version>0.0.0</version>
+  <description>The ERASOR package</description>
+  <maintainer email="shapelim@kaist.ac.kr">Hyungtae_Lim</maintainer>
+
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>TODO</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>message_generation</run_depend>
+  <run_depend>libpcl-all</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>nav_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>  
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>roslaunch</build_depend>
+  <build_depend>libpcl-all-dev</build_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+
+<export>
+  <rosdoc config="rosdoc.yaml" />
+</export>
+</package>

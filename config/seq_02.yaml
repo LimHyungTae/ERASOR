@@ -1,0 +1,35 @@
+idx: 450
+erasor: 
+    max_range: 80.0  # 20 / 15 also good     10/5 For Korea Univ!!
+    num_rings: 20    # 35   # 0911_{3, 4} 는 20이었음
+    num_sectors: 108 # 108
+    min_h: -0.8
+    max_h: 2.0
+    th_ground_retrieval_h: 0.2 # <- 0.4   height [m]
+    th_bin_max_h: 0.2 # [m]
+    scan_ratio_threshold: 0.2 # The Larger, the more aggressive!!
+    minimum_num_pts: 6
+    rejection_ratio: 0
+    sac_distThr: 0.05
+    gf_distThr: 0.15
+    gf_iter: 3
+    gf_num_lpr: 20
+    gf_th_seeds_height: 0.5
+    version: 3 # 2: p-GPF / 3: blocking
+
+
+MapUpdater:
+    data_type: "02"
+    filename: "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src_0_2/02_860_to_950_w_interval2_voxel_0.200000.pcd" 
+    env: "outdoor"
+    save_path: "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/erasor_v2"
+    query_voxel_size: 0.2
+    map_voxel_size: 0.2  
+    voxelization_interval: 10
+    removal_interval: 5
+
+tf:
+     lidar2body: [0.0, 0.0, 1.73, 0, 0.0, 0.0, 1.0] # xyz q_x, q_y, q_z, q_w in order
+
+verbose: true
+

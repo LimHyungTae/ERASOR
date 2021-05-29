@@ -1,0 +1,62 @@
+sensorOn:
+    lidar: true # ALWAYS TRUE FOR IM PACKAGE
+    odom:  true
+    image: false
+    gps:   false
+
+nodesplit:
+    time: 0.01
+    odom: [0.1, 30] #m, deg
+
+node:
+    timeSync: 0.01
+    superNodeSplitLength  : 0.5   # m
+    superNodeSplitDegree  : 3.0  # deg
+    superNodeLength       : 5.0   # m
+    superNodeDegree       : 10.0  # deg
+
+covariance:
+    odom:       [0.5, 0  ,  0.1,
+                 0  , 0.5,    0,
+                 0  , 0  ,   0.5]
+    imu_ori:    [0.1,   0,   0,
+                   0, 0.03,   0,
+                   0,   0,  0.01]
+    imu_gyr:    [0.1,   0,   0,
+                   0, 0.03,   0,
+                   0,   0,  0.01]
+    imu_acc:    [0.1,   0,   0,
+                   0, 0.1,   0,
+                   0,   0,  0.1]
+    icp_sup:    [0.1,0.1,0.1,0.1,0.1,0.1] #X Y Z QX QY QZ?
+
+graph:
+    loopClosureDistance : 15.0 # m
+    loopClosureAngle    : 30  # deg
+
+tf: # 'X,Y,Z,Qx,Qy,Qz,Qw' for Each sensor.. Converter : https://www.andre-gaschler.com/rotationconverter/
+    robot2lidarBase : [-0.0607, 0,  0.93360, 0, -0.1443562, 0, 0.9895258]
+    lidarBase2lidar : [0      , 0,  0.03618, 0, 0, 1, 0] #Especially for Ouster. if other, [0 0 0 0 0 0 1] will be ok.
+    robot2camera    : [0      , 0,        0, 0, 0, 0, 0]
+
+ICP:
+    voxelsizeQuery   : 0.4
+    voxelsizeTarget   : 0.8
+    minscore    : 0.2
+    maxdist     : 10.0
+    maxiter     : 2000
+    epsilon     : 0.0001
+    RANSACIter  : 1000
+    minHeight   : -2.0
+    maxHeight   :  8.0
+
+camera: # 'X,Y,Z,Qx,Qy,Qz,Qw' for Each sensor
+    S: [1280, 1024] #Width Height
+    K: [1308.033983, 1315.896032, 628.165440, 504.530506] #Fx Fy Cx Cy
+    D: [-0.200029, 0.135075, 0.003619, -0.001101, 0.000000]
+
+lidarodom:
+    maxRange: 80.0
+
+octomap:
+    resolution: 0.2

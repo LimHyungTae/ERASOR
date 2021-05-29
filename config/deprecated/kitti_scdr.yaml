@@ -1,0 +1,61 @@
+idx: 450
+scdr: 
+    max_range: 80.0  # 20 / 15 also good     10/5 For Korea Univ!!
+    num_rings: 35    # 35
+    num_sectors: 108 # Originally, all cases are 108, yet in case of Korea univ, we need more larger one!
+    min_h: -0.8
+    max_h: 3.0
+    threshold_h: 0.2 # <- 0.4   height [m]
+    ground_h: 0.05 # [m]
+    threshold_h_percentage: 0.3 # percentage: originally, 0.3 yet 0.3 seems like it is quite aggressive!
+    minimum_num_pts: 10
+    rejection_ratio: 0
+    sac_distThr: 0.05
+    gf_distThr: 0.05
+    iter_groundfilter: 3
+
+
+MapUpdater:
+    initial_count: 0
+    data_type: "05"
+    filename: "/media/shapelim/UX960 NVMe/kitti_semantic/semantic_KITTI_map/05_2350_to_2650_w_interval3_voxel_0_2.pcd" 
+    init_registration: false
+    env: "outdoor"
+    voxel_size: 0.05 
+    voxelization_interval: 10
+
+sensors_on:
+    is_odom_on: true
+    is_pc2_on: true
+
+tf:
+     lidar2body: [0.0, 0.0, 1.73, 0, 0.0, 0.0, 1.0] # xyz q_x, q_y, q_z, q_w in order
+
+debug:
+    nodegen: true
+    registrator: true
+
+# For NodeGen
+node:
+    dist_diff: 0.2
+    angle_diff: 30.0
+
+pc2:
+    range_max: 100.0
+    range_min: 0.1
+    voxel_size: 0.2 # also used in IcpMatcher
+    voxelization_interval: 100
+    
+
+NDT:
+    is_ndt_on: false
+    epsilon: 0.01
+    step_size: 0.1
+    resolution: 2.0
+    num_iter_max: 30
+    voxel_size: 0.5 
+    voxelization_interval: 10
+    score: 10.0
+
+
+

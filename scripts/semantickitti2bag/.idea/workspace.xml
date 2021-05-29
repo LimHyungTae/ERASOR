@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c23f8ccf-137e-4285-892f-1991003c951c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../include/erasor/OnlineMapUpdater.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../include/erasor/erasor.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analysis_check.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analyze_intensities.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../src/online_map_updater/src/OnlineMapUpdater.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../src/online_map_updater/src/erasor_utils.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../certificate_reference_pcd/entrance.pcd" beforeDir="false" afterPath="$PROJECT_DIR$/../../certificate_reference_pcd/entrance.pcd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../certificate_reference_pcd/hallway0317.pcd" beforeDir="false" afterPath="$PROJECT_DIR$/../../certificate_reference_pcd/hallway0317.pcd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../certificate_reference_pcd/hallway0317_voxel_0_1.pcd" beforeDir="false" afterPath="$PROJECT_DIR$/../../certificate_reference_pcd/hallway0317_voxel_0_1.pcd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../certificate_reference_pcd/hallway_deprecated.pcd" beforeDir="false" afterPath="$PROJECT_DIR$/../../certificate_reference_pcd/hallway_deprecated.pcd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../certificate_reference_pcd/parkinglot.pcd" beforeDir="false" afterPath="$PROJECT_DIR$/../../certificate_reference_pcd/parkinglot.pcd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../certificate_reference_pcd/parkinglot_result.pcd" beforeDir="false" afterPath="$PROJECT_DIR$/../../certificate_reference_pcd/parkinglot_result.pcd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../certificate_reference_pcd/w16.pcd" beforeDir="false" afterPath="$PROJECT_DIR$/../../certificate_reference_pcd/w16.pcd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../config/ISRM2.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../config/ekf_param.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../config/kitti_scdr.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../img/icra21_00.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../img/icra21_00.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../img/icra21_01.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../img/icra21_01.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../img/icra21_02.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../img/icra21_02.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../img/icra21_05.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../img/icra21_05.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../img/icra21_07.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../img/icra21_07.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../img/icra21_08.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../img/icra21_08.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch/fill_intensity.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch/groundextraction.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch/kitti_scdr.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch/mapgen.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch/mapviz.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch/mapviz_debug.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch/operate_ekf.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch/show_complement_07.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_00/gf_seq_00.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_00/seq_00.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_00/seq_00.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_01/gf_seq_01.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_01/seq_01.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_01/seq_01.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_02/gf_seq_02.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_02/seq_02.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_02/seq_02.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_05/gf_seq_05.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_05/seq_05.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_05/seq_05.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_05/tmp_viz_seq_05.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_05/total_map_viz_seq_05.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_05/total_map_viz_seq_05.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_07/gf_seq_07.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_07/seq_07.launch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../launch_07/seq_07.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rviz/complement_comparison.rviz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rviz/drbfactory_demonstration.rviz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rviz/entrance_demonstration.rviz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rviz/ground.rviz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rviz/ground_body.rviz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rviz/kitti_mapgen.rviz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rviz/kitti_scdr.rviz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rviz/korea_univ_demonstration.rviz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rviz/map_comparison.rviz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rviz/map_comparison_exag.rviz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rviz/mapupdater_body.rviz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rviz/parkinglot_demonstration.rviz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rviz/scdr_bodyframe.rviz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rviz/scdr_bodyframe_seq1.rviz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rviz/scdr_bodyframe_tmp.rviz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rviz/vizmap.rviz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rviz/w16_demonstration.rviz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/semantickitti2bag.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/semantickitti2bag.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/05_num_dyn.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analysis_octomap.py" beforeDir="false" afterPath="$PROJECT_DIR$/analysis_octomap.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comparison_cpp_python.py" beforeDir="false" afterPath="$PROJECT_DIR$/comparison_cpp_python.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitti2bag.py" beforeDir="false" afterPath="$PROJECT_DIR$/kitti2bag.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitti2node.py" beforeDir="false" afterPath="$PROJECT_DIR$/kitti2node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parsing.py" beforeDir="false" afterPath="$PROJECT_DIR$/parsing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plot_num_dynamic_obj.py" beforeDir="false" afterPath="$PROJECT_DIR$/plot_num_dynamic_obj.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plot_num_dynamic_obj_seq05.py" beforeDir="false" afterPath="$PROJECT_DIR$/plot_num_dynamic_obj_seq05.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pykitti/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pykitti/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pykitti/odometry.py" beforeDir="false" afterPath="$PROJECT_DIR$/pykitti/odometry.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pykitti/raw.py" beforeDir="false" afterPath="$PROJECT_DIR$/pykitti/raw.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pykitti/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/pykitti/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scribble.py" beforeDir="false" afterPath="$PROJECT_DIR$/scribble.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/semantic_kitti_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/semantic_kitti_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.csv" beforeDir="false" afterPath="$PROJECT_DIR$/test.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/00.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/00.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/01.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/01.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/02.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/02.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/03.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/03.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/04.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/04.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/05.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/05.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/05_bold.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/05_bold.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/06.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/06.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/07.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/07.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/08.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/08.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/09.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/09.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/partial_00.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/partial_00.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/partial_01.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/partial_01.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/partial_02.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/partial_02.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/partial_03.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/partial_03.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/partial_04.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/partial_04.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/partial_05.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/partial_05.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/partial_06.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/partial_06.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/partial_07.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/partial_07.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/partial_08.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/partial_08.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viz/partial_09.png" beforeDir="false" afterPath="$PROJECT_DIR$/viz/partial_09.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/compare_complement.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/test_codes/compare_complement.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/compare_map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/test_codes/compare_map.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/fill_removert_intensity.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/test_codes/fill_removert_intensity.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/ground_filter/groundplanfit.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/kdtree_test.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/test_codes/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/mapgen/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/mapgen/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/mapgen/mapgen.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/mapgen/mapgen.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/merge_map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/test_codes/merge_map.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/offline_map_updater/map_updater.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/online_map_updater/erasor_main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/offline_map_updater/src/OfflineMapUpdater.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/offline_map_updater/src/OfflineMapUpdater.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/offline_map_updater/src/erasor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/online_map_updater/src/erasor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/offline_map_updater/src/erasor.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/offline_map_updater/src/ndt.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/offline_map_updater/src/ndt.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/offline_map_updater/src/scdrC.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/offline_map_updater/src/scdrC.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/parse_data.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/test_codes/parse_data.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/pcl_kd_tree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/test_codes/pcl_kd_tree.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/pcl_scribble.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/test_codes/pcl_scribble.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/pub_marker.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/test_codes/pub_marker.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/pub_polygon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/test_codes/pub_polygon.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/speed_check.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/test_codes/speed_check.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/viz_map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/test_codes/viz_map.cpp" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1ganlsEPnmH5ywwV5Shcv1IXVOC" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="preferences.general" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.analysis_check">
+    <configuration name="analysis" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="semantickitti2bag" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/analysis.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="analysis_check" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="semantickitti2bag" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/analysis_check.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="analysis_octomap" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="semantickitti2bag" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/analysis_octomap.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="analyze_intensities" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="semantickitti2bag" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/analyze_intensities.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="scribble" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="semantickitti2bag" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scribble.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.analysis_check" />
+        <item itemvalue="Python.analysis" />
+        <item itemvalue="Python.analyze_intensities" />
+        <item itemvalue="Python.scribble" />
+        <item itemvalue="Python.analysis_octomap" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c23f8ccf-137e-4285-892f-1991003c951c" name="Default Changelist" comment="" />
+      <created>1598361724219</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1598361724219</updated>
+      <workItem from="1598361727174" duration="6836000" />
+      <workItem from="1598415429034" duration="5038000" />
+      <workItem from="1598505211648" duration="3631000" />
+      <workItem from="1598511608461" duration="16161000" />
+      <workItem from="1599287828993" duration="4323000" />
+      <workItem from="1599310140050" duration="17573000" />
+      <workItem from="1599460410884" duration="4616000" />
+      <workItem from="1599551161574" duration="26266000" />
+      <workItem from="1599747627412" duration="15814000" />
+      <workItem from="1600117558938" duration="5077000" />
+      <workItem from="1600298852234" duration="3067000" />
+      <workItem from="1600795696352" duration="8281000" />
+      <workItem from="1601018590931" duration="2349000" />
+      <workItem from="1601039100225" duration="8174000" />
+      <workItem from="1601153511351" duration="10637000" />
+      <workItem from="1601172115644" duration="3277000" />
+      <workItem from="1601213077439" duration="3884000" />
+      <workItem from="1602242279250" duration="663000" />
+      <workItem from="1602345205948" duration="815000" />
+      <workItem from="1603629177301" duration="1000" />
+      <workItem from="1607917313554" duration="9442000" />
+      <workItem from="1608034082836" duration="1635000" />
+      <workItem from="1608466689475" duration="5437000" />
+      <workItem from="1608617766996" duration="2959000" />
+      <workItem from="1608640117393" duration="4105000" />
+      <workItem from="1608707099778" duration="1506000" />
+      <workItem from="1609217453480" duration="2314000" />
+      <workItem from="1610513009798" duration="20000" />
+      <workItem from="1618553147498" duration="2767000" />
+      <workItem from="1619280858776" duration="39000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
