@@ -177,11 +177,11 @@ roslaunch erasor compare_results.launch
 ```
 * Then you can inspect all pcd results that are already parsed into static points and dynamic points.
 * All examples are here:
-    * [Sequence 00: 4,390~4,530](imgs/00)
-    * [Sequence 01: 150~250](imgs/01)
-    * [Sequence 02: 860~950](imgs/02)
-    * [Sequence 05: 2,350~2,670](imgs/05)
-    * [Sequence 07: 630~820](imgs/07)
+    * [Sequence 00: 4,390~4,530](img/00)
+    * [Sequence 01: 150~250](img/01)
+    * [Sequence 02: 860~950](img/02)
+    * [Sequence 05: 2,350~2,670](img/05)
+    * [Sequence 07: 630~820](img/07)
 
 ## Citation 
 If you use our code or method in your work, please consider citing the following:
