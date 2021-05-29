@@ -15,13 +15,11 @@ find_package(catkin REQUIRED COMPONENTS
     geometry_msgs
     laser_geometry
     sensor_msgs
-    velodyne_pointcloud
 )
 
 add_message_files(
    FILES
    node.msg
-   nodes.msg
 )
 
 generate_messages(
@@ -35,9 +33,6 @@ generate_messages(
 find_package(PCL 1.7 REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system filesystem)
 
-#include_directories(... ${Boost_INCLUDE_DIRS})
-#link_directories(... ${Boost_LIBRARY_DIRS})
-#target_link_libraries(... ${Boost_LIBRARIES})
 
 catkin_package(
   INCLUDE_DIRS include
@@ -93,6 +88,10 @@ set(erasor_src
 add_executable(offline_map_updater src/online_map_updater/erasor_main.cpp ${erasor_src})
 target_link_libraries(offline_map_updater ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 add_dependencies(offline_map_updater erasor_generate_messages_cpp)
+
+add_executable(compare_map src/compare_map.cpp)
+target_link_libraries(compare_map ${catkin_LIBRARIES})
+
 #
 #add_executable(kitti_mapgen src/mapgen/main.cpp src/mapgen/mapgen.hpp)
 #target_link_libraries(kitti_mapgen ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
