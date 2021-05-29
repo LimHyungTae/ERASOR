@@ -13,7 +13,7 @@ We provide all contents including
 
 So enjoy our codes! :)
 
-(***PLEASE REMIND THAT THIS REPO IS IN PROGRESS!! May be it be will completed by ~6/6***)
+(***PLEASE REMIND THAT THIS REPO IS IN PROGRESS!! Maybe it will be completed by ~6/6***)
 
 Contact: Hyungtae Lim (shapelim@kaist.ac.kr)
 
@@ -23,7 +23,7 @@ Advisor: Hyun Myung (hmyung@kaist.ac.kr)
 0. [Test Env.](#Test-Env.)
 0. [Requirements](#requirements)
 0. [How to Run ERASOR](#How-to-Run-ERASOR)
-0. [Calculate PR/RR](#Calculate0PR/RR)
+0. [Calculate PR/RR](#Calculate-PR/RR)
 0. [Benchmark](#benchmark)
 0. [Run Your Own Code](#Run-Your-Own-Code)
 0. [Visualization of All the State-of-the-arts](#Visualization-of-All-the-State-of-the-arts)
@@ -79,7 +79,7 @@ wget https://urserver.kaist.ac.kr/publicdata/erasor/rosbag/07_630_to_820_w_inter
 #### Description of Preprocessed Rosbag Files
 
 - Please note that the rosbag consists of `node`. Refer to `msg/node.msg`.
-- Note that the each label of point is assigned in `intensity` for the sake of convenience.
+- Note that each label of the point is assigned in `intensity` for the sake of convenience.
 - And we set the following classes are dynamic classes:
 ```
 # 252: "moving-car"
@@ -95,7 +95,7 @@ wget https://urserver.kaist.ac.kr/publicdata/erasor/rosbag/07_630_to_820_w_inter
 
 ## How to Run ERASOR
 
-We will explain how to run our code on seq 05 of KITTI dataset as an example.
+We will explain how to run our code on seq 05 of the KITTI dataset as an example.
 
 **Step 1. Build naive map**
 
@@ -109,7 +109,7 @@ roscore # (Optional)
 roslaunch erasor mapgen.launch
 rosbag play 05_2350_to_2670_w_interval_2_node.bag
 ```
-* Then, dense map and voxelized map are auto-saved at the save path. Note that dense map is used to fill corresponding labels (**To be explained**). Voxelized map will be input of step 2 as a naively accumulated map.
+* Then, dense map and voxelized map are auto-saved at the `save path`. Note that the dense map is used to fill corresponding labels (**To be explained**). The voxelized map will be an input of step 2 as a naively accumulated map.
 
 **Step 2. Run ERASOR**
 ![erasor](img/kitti05.gif)
@@ -123,7 +123,7 @@ roscore # (Optional)
 roslaunch erasor run_erasor.launch target_seq:="05"
 rosbag play 05_2350_to_2672_w_interval_2_node.bag
 ```
-* **IMPORTANT:** After finishing running ERASOR, run following command to save the static map as a pcd file on another bash.
+* **IMPORTANT:** After finishing running ERASOR, run the following command to save the static map as a pcd file on another bash.
 * "0.2" denotes voxelization size.
 ```bash
 rostopic pub /saveflag std_msgs/Float32 "data: 0.2"
@@ -157,7 +157,7 @@ TBU: The code is already in this repository, yet the explanation is incomplete.
 
 ## Visualization of All the State-of-the-arts
 
-* First, download the all materials.
+* First, download all pcd materials.
 ```bash
 wget https://urserver.kaist.ac.kr/publicdata/erasor/erasor_paper_pcds.zip
 unzip erasor_paper_pcds.zip
