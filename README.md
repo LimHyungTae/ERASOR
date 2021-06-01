@@ -45,7 +45,7 @@ The code is tested successfully at
 ```bash
 sudo apt-get install ros-melodic-jsk-recognition
 sudo apt-get install ros-melodic-jsk-common-msgs
-sudo apt-get install ros-melodic-rviz-plugins
+sudo apt-get install ros-melodic-jsk-rviz-plugins
 ```
 
 #### Buildg Our Package 
