@@ -32,7 +32,6 @@
 #include <pcl/visualization/pcl_visualizer.h>
 // ROS msgs
 #include <erasor/node.h>
-#include <erasor/nodes.h>
 #include <visualization_msgs/Marker.h>
 #include <jsk_recognition_msgs/PolygonArray.h>
 #include <geometry_msgs/PolygonStamped.h>

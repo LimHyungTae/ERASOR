@@ -6,6 +6,7 @@ add_compile_options(-std=c++17)
 find_package(catkin REQUIRED COMPONENTS
     roscpp
     rospy
+    message_generation
     std_msgs
     nav_msgs
     roslaunch
@@ -22,6 +23,7 @@ add_message_files(
    node.msg
 )
 
+
 generate_messages(
   DEPENDENCIES
   std_msgs
@@ -29,6 +31,7 @@ generate_messages(
   sensor_msgs
   nav_msgs
 )
+
 
 find_package(PCL 1.7 REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system filesystem)
