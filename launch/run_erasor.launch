@@ -1,0 +1,26 @@
+<launch>
+
+<node name="offline_map_updater" pkg="erasor" type="offline_map_updater" output="screen">
+</node>
+<node name="rviz" pkg="rviz" type="rviz" args="-d $(find erasor)/rviz/erasor_map.rviz"/>
+<node name="rviz_body" pkg="rviz" type="rviz" args="-d $(find erasor)/rviz/srt.rviz"/>
+
+<arg name="target_seq" default="05"/>
+<group if="$(eval arg('target_seq') ==00)">
+    <rosparam command="load" file="$(find erasor)/config/seq_00.yaml" />
+</group>
+<group if="$(eval arg('target_seq') ==01)">
+    <rosparam command="load" file="$(find erasor)/config/seq_01.yaml" />
+</group>
+<group if="$(eval arg('target_seq') ==02)">
+    <rosparam command="load" file="$(find erasor)/config/seq_02.yaml" />
+</group>
+<group if="$(eval arg('target_seq') ==05)">
+    <rosparam command="load" file="$(find erasor)/config/seq_05.yaml" />
+</group>
+<group if="$(eval arg('target_seq') ==07)">
+    <rosparam command="load" file="$(find erasor)/config/seq_07.yaml" />
+</group>
+
+
+</launch>
