@@ -131,6 +131,8 @@ void OnlineMapUpdater::callback_flag(const std_msgs::Float32::ConstPtr &msg) {
     // 2. Save the cloudmap
     mapOut.width  = mapOut.points.size();
     mapOut.height = 1;
+    
+    std::cout << "\033[1;32mTARGET: "<< save_path + "/" + data_name + "_result.pcd" << "\033[0m" << std::endl;
     std::cout << "Voxelization operated with " << msg->data << " voxel size" << std::endl;
     pcl::io::savePCDFileASCII(save_path + "/" + data_name + "_result.pcd", mapOut);
     std::cout << "\033[1;32mComplete to save the final static map\033[0m" << std::endl;

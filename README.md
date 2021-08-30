@@ -107,7 +107,7 @@ roscore # (Optional)
 roslaunch erasor mapgen.launch
 rosbag play 05_2350_to_2670_w_interval_2_node.bag
 ```
-* Then, dense map and voxelized map are auto-saved at the `save path`. Note that the dense map is used to fill corresponding labels (:warning: **To be explained**). The voxelized map will be an input of step 2 as a naively accumulated map.
+* Then, dense map and voxelized map are auto-saved at the `save path`. Note that the dense map is used to fill corresponding labels ([HERE](#Calculate-PR/RR)). The voxelized map will be an input of step 2 as a naively accumulated map.
 
 **Step 2. Run ERASOR**
 ![erasor](img/kitti05.gif)
@@ -141,6 +141,7 @@ You can check our results directly.
 ```bash
 wget https://urserver.kaist.ac.kr/publicdata/erasor/erasor_paper_pcds.zip
 unzip erasor_paper_pcds.zip
+```
 
 Then, run the analysis code as follows:
 

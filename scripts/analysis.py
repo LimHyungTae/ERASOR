@@ -178,16 +178,10 @@ def evaluate(gt, estimate, voxelsize=0.2):
 
     pr = float(num_static_preserved) / float(num_gt['static']) * 100
     rr = float(num_gt['dynamic'] - num_dynamic_preserved) / float(num_gt['dynamic']) * 100
-    printed_data = gt_data + est_data \
-                   + [num_estimate['percentage']/num_gt['percentage']
-                      , pr
-                      , rr
-                      , np.log(num_estimate['percentage']/100) / np.log(num_gt['percentage']/100)
-                      , precision
-                      , recall
-                      , 2 * (pr/100) * (rr/100) / ((pr/100) + (rr/100))]
-    print(tabulate([printed_data], headers=['# s', '# d', '%', '# s out.', '# d out.', '%',
-                                             "% / %", 'Preservation', 'rejection', 'REL (log % / log %)', 'precision', 'recall', 'F1'], tablefmt='orgtbl'))
+    printed_data = gt_data + est_data + [pr, rr, 2 * (pr/100) * (rr/100) / ((pr/100) + (rr/100))]
+
+    print(tabulate([printed_data], headers=['# stat. pts', '# dyn. pts', '%', '# est. stat. pts', '# est. dyn. pts',
+                                            '%', 'Preservation', 'rejection', 'F1'], tablefmt='orgtbl'))
 def load_pcd(path):
     print("On loading data...")
     data = pypcd.PointCloud.from_path(path)
@@ -195,98 +189,19 @@ def load_pcd(path):
     return data
 
 if __name__ == "__main__":
-    seq = "05"
-    print("target: " + seq)
-    if seq == "00":
-        src_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src_v2/00_4390_to_4530_w_interval2__voxel_0_2.pcd"
-        # src_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src_0_2/00_4390_to_4530_w_interval2_voxel_0.200000.pcd"
-        # target = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/erasor_best_pcd/00_result.pcd"
-        target = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/erasor_best_pcd/00_result_best.pcd"
-        # rm3 = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/removert_rm3_00_w_label.pcd"
-        # rv1 = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/removert_rv1_00_w_label.pcd"
+    import argparse
+    import os
 
-        target_ppl = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/pplremover/00_4390_to_4530_static_w_label.pcd"
+    parser = argparse.ArgumentParser(description='Analysis of static map')
+    parser.add_argument('--gt', default='/home/shapelim/erasor_paper_pcds/gt/00_voxel_0_2.pcd', type=str)
+    parser.add_argument('--est', default='/home/shapelim/erasor_paper_pcds/estimate/00_ERASOR.pcd', type=str)
+    args = parser.parse_args()
+    print("GT Path: " + args.gt)
+    print("Estimate Path: " + args.est)
 
-    elif seq == "01":
-        src_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src_v2/01_150_to_250_w_interval1__voxel_0_2.pcd"
-        # src_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src_0_2/01_150_to_250_w_interval2_voxel_0.200000.pcd"
-        # target = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/01_result.pcd"
-        # target = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/erasor_best_pcd/01_floor_best_0_125_91_48_95_38_best.pcd"
-        target = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/erasor_v2/01_result.pcd"
-        # rm3 = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/removert_rm3_01_w_label.pcd"
-        # rv1 = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/removert_rv1_01_w_label.pcd"
+    assert os.path.isfile(args.gt), "GT path does not exist"
+    assert os.path.isfile(args.est), "Est path does not exist"
 
-        target_ppl = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/pplremover/01_150_to_250_static_w_label.pcd"
-
-    elif seq == "02":
-        src_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src_v2/02_860_to_950_w_interval2_voxel__0_2.pcd"
-        # src_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src_0_2/02_860_to_950_w_interval2_voxel_0.200000.pcd"
-        target = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/erasor_best_pcd/02_result_ground_h_0_25.pcd"
-
-        rm3 = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/removert_rm3_02_w_label.pcd"
-        rv1 = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/removert_rv1_02_w_label.pcd"
-
-        target_ppl = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/pplremover/02_860_to_950_static_w_label.pcd"
-
-    elif seq == "05":
-        # src_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src_v2/05_2350_to_2670_w_interval2_voxel__0_2.pcd"
-        # src_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src_v2/02_860_to_950_w_interval2_voxel__0_2_original.pcd"
-        src_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src_0_2_test/05_2350_to_2670_w_interval1_voxel_0.200000.pcd"
-        # target = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/05_result_h_0_05.pcd"
-        # target = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/erasor_best_pcd/05_result_real_best.pcd"
-
-        target = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src_0_2_test/05_result.pcd"
-        rm3 = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/removert_rm3_05_w_label.pcd"
-        rv1 = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/removert_rv1_05_w_label.pcd"
-
-        target_ppl = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/pplremover/05_2350_to_2670_static_w_label.pcd"
-
-    elif seq == "07":
-        src_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src_v2/07_630_to_820_w_interval2_voxel__0_2.pcd"
-        # src_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src_0_2/07_630_to_820_w_interval2_voxel_0.200000.pcd"
-        target = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/erasor_best_pcd/07_result_best.pcd"
-       
-        rm3 = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/removert_rm3_07_w_label.pcd"
-        rv1 = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/removert_rv1_07_w_label.pcd"
-
-        target_ppl = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/pplremover/07_630_to_820_static_w_label.pcd"
-    elif seq == "05_all":
-        src_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src_0_2/seq05/merge_final_05_raw.pcd"
-        target = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src_0_2/seq05/merge_final_05_prediction_v2.pcd"
-
-    # src_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src/01_150_to_249_w_interval3_voxel_0_2.pcd"
-    # wo_floor_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/01_result.pcd"
-    # w_floor_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/01_result_w_floor.pcd"
-    # floor_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/01_result_floor.pcd"
-
-
-    # wo_floor_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/07_result_v2.pcd"
-    # w_floor_path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/07_result_v3.pcd"
-
-    gt_data = load_pcd(src_path)
-    target_data = load_pcd(target)
-    # target_data = load_pcd(target_ppl)
-    # w_floor_data = load_pcd(w_floor)
-
-    # rm3_data = load_pcd(rm3)
-    # rv1_data = load_pcd(rv1)
-    # evaluate(gt_data, w_floor_data, voxelsize=0.2)
-    # evaluate(gt_data, rm3_data, voxelsize=0.2)
-    # evaluate(gt_data, rv1_data, voxelsize=0.2)
-
+    gt_data = load_pcd(args.gt)
+    target_data = load_pcd(args.est)
     evaluate(gt_data, target_data, voxelsize=0.2)
-
-    # w_floor = load_pcd(w_floor_path)
-    # wo_floor = load_pcd(wo_floor_path)
-    # floor = load_pcd(floor_path)
-
-    ##########################################
-    # evaluate(gt_data, wo_floor, voxelsize=0.2)
-    # evaluate(gt_data, w_floor, voxelsize=0.2)
-    # evaluate(gt_data, floor, voxelsize=0.2)
-    ##########################################
-
-    # path = "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/08_0_to_249_w_interval3_voxel_0_2.pcd"
-    # data = load_pcd(path)
-    # fetch_dynamic_objects_ids(data.pc_data['intensity'])
-    #
