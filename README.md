@@ -13,10 +13,6 @@ We provide all contents including
 
 So enjoy our codes! :)
 
-(***PLEASE REMIND THAT THIS REPO IS IN PROGRESS!! ERASOR is operated well, but other utility files may be completed by ~6/6***)
-
-So, :warning: implies that code is already in this repo but the explanation is not elaborated)
-
 Contact: Hyungtae Lim (shapelim@kaist.ac.kr)
 
 Advisor: Hyun Myung (hmyung@kaist.ac.kr)
