@@ -127,18 +127,38 @@ rosbag play 05_2350_to_2672_w_interval_2_node.bag
 rostopic pub /saveflag std_msgs/Float32 "data: 0.2"
 ```
 
+* Then, you can see the printed command as follows:
+
+![fig_command](img/finish_command.png)
+
 * The results will be saved under the `save_path` folder, i.e. `$save_path$/05_result.pcd`.
 
 ## Calculate PR/RR
 
-:warning: TBU: The code is already in this repository, yet the explanation is incomplete.
+You can check our results directly.
+
+* First, download all pcd materials.
 ```bash
-python analysis.py
+wget https://urserver.kaist.ac.kr/publicdata/erasor/erasor_paper_pcds.zip
+unzip erasor_paper_pcds.zip
+
+Then, run the analysis code as follows:
+
+```bash
+python analysis.py --gt $GT_PCD_PATH$ --est $EST_PCD_PATH$
 ```
+
+E.g, 
+
+```bash
+python analysis.py --gt /home/shapelim/erasor_paper_pcds/gt/05_voxel_0_2.pcd --est /home/shapelim/erasor_paper_pcds/estimate/05_ERASOR.pcd
+```
+
+**NOTE**: For estimating PR/RR, more dense pcd file, which is generated in the `mapgen.launch` procedure, is better to estimate PR/RR precisely.
+
 
 ## Benchmark
 
-:warning:
 
 - Error metrics are a little bit different from those in the paper:
   
