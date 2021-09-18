@@ -1,0 +1,6 @@
+<launch>
+<rosparam command="load" file="$(find erasor)/config/viz_params.yaml" />
+
+<node name="mapcomparison" pkg="erasor" type="compare_map" output="screen"/>
+<node name="rviz1234" pkg="rviz" type="rviz" args="-d $(find erasor)/rviz/map_comparison.rviz"/>
+</launch>
