@@ -5,7 +5,6 @@ erasor:
     num_sectors: 60 # 108
     min_h: -1.3
     max_h: 3.2
-    th_ground_retrieval_h: 0.2 # <- 0.4   height [m]
     th_bin_max_h: 0.05 # [m]
     scan_ratio_threshold: 0.3 # percentage: originally, 0.3 yet 0.3 seems like it is quite aggressive!
     minimum_num_pts: 10

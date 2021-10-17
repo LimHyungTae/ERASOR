@@ -50,7 +50,6 @@ public:
         nh.param("/erasor/max_h", max_h, 3.0);
         nh.param("/erasor/min_h", min_h, 0.0);
         nh.param("/erasor/th_bin_max_h", th_bin_max_h, 0.39);
-        nh.param("/erasor/th_ground_retrieval_h", th_ground_retrieval_h, 0.75);
         nh.param("/erasor/scan_ratio_threshold", scan_ratio_threshold, 0.22);
         nh.param("/erasor/num_lowest_pts", num_lowest_pts, 5);
         nh.param("/erasor/minimum_num_pts", minimum_num_pts, 4);
@@ -165,7 +164,6 @@ private:
 
     double min_h;
     double max_h;
-    double th_ground_retrieval_h;
     double scan_ratio_threshold;
     double th_bin_max_h;
     int    minimum_num_pts;
