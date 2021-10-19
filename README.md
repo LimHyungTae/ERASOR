@@ -21,7 +21,7 @@ Advisor: Hyun Myung (hmyung@kaist.ac.kr)
 
 ## NEWS (Recent update: Oct., 2021) 
 - An example of running ERASOR in your own env. is provided.
-    - Please refer to please refer to `src/online_map_updater/erasor_main.cpp` file and `run_erasor_in_your_env.launch` file and below [instruction](# ).
+    - Please refer to please refer to `src/online_map_updater/erasor_main.cpp` file and `run_erasor_in_your_env.launch` file and below [instruction](#ERASOR-in-the-Wild).
 ---
 
 ## Contents
