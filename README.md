@@ -34,7 +34,7 @@ Advisor: Hyun Myung (hmyung@kaist.ac.kr)
 0. [ERASOR in the Wild](#ERASOR-in-the-Wild)
 0. [Citation](#citation)
 
-### Test Env.
+## Test Env.
 The code is tested successfully at
 * Linux 18.04 LTS
 * ROS Melodic
@@ -203,7 +203,7 @@ roslaunch erasor compare_results.launch
     * [Sequence 05: 2,350~2,670](img/05)
     * [Sequence 07: 630~820](img/07)
 
-## ERASOR in the Wild 
+## ERASOR in the Wild
 
 ### In your own dataset
 
@@ -244,12 +244,12 @@ _____...
 ```
 roslaunch erasor run_erasor_in_your_env.launch
 ```
+### Results
 
+![](img/demo/region_A_gif.gif)
 
+![](img/demo/region_B_gif.gif)
 
-Region A                 |  Region B
-:-------------------------:|:-------------------------:
-![](img/demo/bongeunsa_satellite.png) |  ![](img/demo/bongeunsa_map.png)
 
 ### Note: Setting appropriate parameters
 
