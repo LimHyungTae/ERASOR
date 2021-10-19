@@ -11,7 +11,7 @@ erasor:
     minimum_num_pts: 15
     rejection_ratio: 0
     sac_distThr: 0.05
-    gf_distThr: 0.125
+    gf_dist_thr: 0.125
     gf_iter: 3
     gf_num_lpr: 20
     gf_th_seeds_height: 0.4

@@ -11,7 +11,7 @@ scdr:
     minimum_num_pts: 10
     rejection_ratio: 0
     sac_distThr: 0.05
-    gf_distThr: 0.05
+    gf_dist_thr: 0.05
     iter_groundfilter: 3
 
 

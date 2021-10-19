@@ -4,6 +4,8 @@ Official page of [*"ERASOR: Egocentric Ratio of Pseudo Occupancy-based Dynamic O
 
 ![overview](img/fig_overview.png)
 
+
+
 We provide all contents including
 
 - [x] Source code of ERASOR
@@ -17,14 +19,19 @@ Contact: Hyungtae Lim (shapelim@kaist.ac.kr)
 
 Advisor: Hyun Myung (hmyung@kaist.ac.kr)
 
+## NEWS (Recent update: Oct., 2021) 
+- An example of running ERASOR in your own env. is provided.
+    - Please refer to please refer to `src/online_map_updater/erasor_main.cpp` file and `run_erasor_in_your_env.launch` file and below [instruction](# ).
+---
+
 ## Contents
 0. [Test Env.](#Test-Env.)
 0. [Requirements](#requirements)
 0. [How to Run ERASOR](#How-to-Run-ERASOR)
 0. [Calculate PR/RR](#Calculate-PR/RR)
 0. [Benchmark](#benchmark)
-0. [Run Your Own Code](#Run-Your-Own-Code)
 0. [Visualization of All the State-of-the-arts](#Visualization-of-All-the-State-of-the-arts)
+0. [ERASOR in the Wild](#ERASOR-in-the-Wild)
 0. [Citation](#citation)
 
 ### Test Env.
@@ -172,10 +179,6 @@ python analysis.py --gt /home/shapelim/erasor_paper_pcds/gt/05_voxel_0_2.pcd --e
   | 07  | 92.00 | 98.33 |
 - But we provide all pcd files! Don't worry. See [Visualization of All the State-of-the-arts](#Visualization-of-All-the-State-of-the-arts) Section.
 
-## Run Your Own Code
-
-:warning: TBU: The code is already in this repository, yet the explanation is incomplete.
-
 ## Visualization of All the State-of-the-arts
 
 * First, download all pcd materials.
@@ -199,6 +202,61 @@ roslaunch erasor compare_results.launch
     * [Sequence 02: 860~950](img/02)
     * [Sequence 05: 2,350~2,670](img/05)
     * [Sequence 07: 630~820](img/07)
+
+## ERASOR in the Wild 
+
+### In your own dataset
+
+To check generalization of ERASOR, we tested ERASOR in more crowded environments. In that experiment, Velodyne Puck 16 was employed, and poses are estimated by [LIO-SAM](https://github.com/TixiaoShan/LIO-SAM).
+
+Satellite map                 |  Pcd map by LIO-SAM
+:-------------------------:|:-------------------------:
+![](img/demo/bongeunsa_satellite.png) |  ![](img/demo/bongeunsa_map.png)
+
+
+When **running ERASOR in your own environments**, please refer to `src/online_map_updater/erasor_main.cpp` file and `run_erasor_in_your_env.launch`.
+
+You can learn how to set experimental setting by repeating our pre-set configurations. Please follow our instructions.
+
+* First, download pre-set dataset.
+```
+wget https://urserver.kaist.ac.kr/publicdata/erasor/bongeunsa_dataset.zip
+unzip bongeunsa_dataset.zip
+```
+
+* Modify `data_dir` in `config/your_own_env.yaml` to be right directory for your machine, where `data_dir` consists of following components as follows:
+
+```
+`data_dir`
+_____pcds
+     |___000000.pcd
+     |___000001.pcd
+     |___000002.pcd
+     |...
+_____dense_global_map.pcd
+_____poses_lidar2body.csv
+_____...
+```
+
+* Launch `launch/run_erasor_in_your_env.launch` as follows:
+
+ 
+```
+roslaunch erasor run_erasor_in_your_env.launch
+```
+
+
+
+Region A                 |  Region B
+:-------------------------:|:-------------------------:
+![](img/demo/bongeunsa_satellite.png) |  ![](img/demo/bongeunsa_map.png)
+
+### Note: Setting appropriate parameters
+
+* As shown in `config`, depending on your own sensor configuration, parameters must be changed. In particular, `min_h` and `max_h`, and `th_bin_max_h` should be changed (note that `min_h` and `max_h`, and `th_bin_max_h` is w.r.t. your body frame of a query pcd file.) 
+* If you use a low-channel LiDAR sensor such as Velodyne Puck-16, `max_r` and `num_rings` must be set as smaller values like `config/your_own_env.yaml` to guarantee the estimated normal vector for each bin is considered to be orthogonal to the ground.
+* If over-ground estimation occurs for each bin, then reduce the value of `gf_dist_thr`.
+
 
 ## Citation 
 If you use our code or method in your work, please consider citing the following:

@@ -76,7 +76,17 @@ namespace erasor_utils {
             PCL_ERROR ("Couldn't read file!!! \n");
             return (-1);
         }
-        std::cout << "Loaded " << dst->size() << " data points from " << pcd_name << std::endl;
+//        std::cout << "Loaded " << dst->size() << " data points from " << pcd_name << std::endl;
+        return 0;
+    }
+
+    template<typename T>
+    int load_pcd(std::string pcd_name, pcl::PointCloud<T>& dst) {
+        if (pcl::io::loadPCDFile<T>(pcd_name, dst) == -1) {
+            PCL_ERROR ("Couldn't read file!!! \n");
+            return (-1);
+        }
+        std::cout << "Loaded " << dst.size() << " data points from " << pcd_name << std::endl;
         return 0;
     }
 

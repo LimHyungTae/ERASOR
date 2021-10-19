@@ -632,6 +632,8 @@ void ERASOR::get_static_estimate(
     ROS_INFO_STREAM("After: \033[1;34m" << complement.points.size() << "\033[0m " << arranged.points.size());
 }
 
+double ERASOR::get_max_range() {return max_r;}
+
 geometry_msgs::PolygonStamped ERASOR::set_polygons(int r_idx, int theta_idx, int num_split) {
     geometry_msgs::PolygonStamped polygons;
     // Set point of polygon. Start from RL and ccw
@@ -673,4 +675,5 @@ geometry_msgs::PolygonStamped ERASOR::set_polygons(int r_idx, int theta_idx, int
 
     return polygons;
 }
+
 

@@ -57,6 +57,7 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 #add_dependencies(marker erasor_generate_messages_cpp)
 
 ###############
+ # Deprecated!
 #add_executable(fill_intensity src/test_codes/fill_removert_intensity.cpp ${unavlib_source})
 #target_link_libraries(fill_intensity ${catkin_LIBRARIES})
 #add_dependencies(fill_intensity erasor_generate_messages_cpp)
@@ -92,7 +93,11 @@ add_executable(offline_map_updater src/online_map_updater/erasor_main.cpp ${eras
 target_link_libraries(offline_map_updater ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 add_dependencies(offline_map_updater erasor_generate_messages_cpp)
 
-add_executable(compare_map src/compare_map.cpp src/online_map_updater/src/erasor_utils.cpp)
+add_executable(main_in_your_env src/online_map_updater/main_in_your_env.cpp ${erasor_src})
+target_link_libraries(main_in_your_env ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+add_dependencies(main_in_your_env erasor_generate_messages_cpp)
+
+ add_executable(compare_map src/compare_map.cpp src/online_map_updater/src/erasor_utils.cpp)
 target_link_libraries(compare_map ${catkin_LIBRARIES})
 
 add_executable(kitti_mapgen src/mapgen/main.cpp src/mapgen/mapgen.hpp src/online_map_updater/src/erasor_utils.cpp)

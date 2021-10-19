@@ -1,0 +1,9 @@
+<launch>
+<rosparam command="load" file="$(find erasor)/config/your_own_env.yaml" />
+
+<node name="main_in_your_env" pkg="erasor" type="main_in_your_env" output="screen">
+</node>
+<node name="rviz" pkg="rviz" type="rviz" args="-d $(find erasor)/rviz/erasor_map_in_your_env.rviz"/>
+<node name="rviz_body" pkg="rviz" type="rviz" args="-d $(find erasor)/rviz/srt.rviz"/>
+
+</launch>
