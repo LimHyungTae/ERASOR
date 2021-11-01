@@ -34,7 +34,7 @@ def count_static_and_dynamic(intensity_np, verbose=False):
         num_class = np.count_nonzero(sem_label == class_id)
         NUM_CLASS_ON_MAP[class_id] = num_class
         num_total = num_total + num_class
-
+    
     nd = num_total
     ns = sem_label.shape[0] - nd
     NUM_CLASS_ON_MAP['dynamic'] = nd
@@ -160,6 +160,15 @@ def evaluate(gt, estimate, voxelsize=0.2):
     num_gt = count_static_and_dynamic(gt.pc_data['intensity'])
     num_estimate = count_static_and_dynamic(estimate.pc_data['intensity'])
 
+    contents = []
+    for dyn_class in DYNAMIC_CLASSES:
+        if num_gt[dyn_class] == 0:
+            line = [dyn_class, "N/A", "N/A", "N/A"]
+        else:
+            line = [dyn_class, float(num_gt[dyn_class] - num_estimate[dyn_class]) / float(num_gt[dyn_class]) * 100, num_estimate[dyn_class], num_gt[dyn_class]]
+        contents.append(line)
+    print(tabulate(contents, headers=["Class ID", "R. R", "# remain pts", "# all"], tablefmt="github"))
+        
     # 1. Set data to xyz
     gt_xyz = data2xyz_np(gt)
     estimate_xyz = data2xyz_np(estimate)
