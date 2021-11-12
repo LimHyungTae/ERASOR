@@ -50,7 +50,7 @@ class odometry:
         # Compute the velodyne to rectified camera coordinate transforms
         data['T_cam0_velo'] = np.reshape(filedata['Tr'], (3, 4))
         data['T_cam0_velo'] = np.vstack([data['T_cam0_velo'], [0, 0, 0, 1]])
-	self.T_cam0_velo = data['T_cam0_velo'];
+        self.T_cam0_velo = data['T_cam0_velo'];
         data['T_cam1_velo'] = T1.dot(data['T_cam0_velo'])
         data['T_cam2_velo'] = T2.dot(data['T_cam0_velo'])
         data['T_cam3_velo'] = T3.dot(data['T_cam0_velo'])

@@ -2,38 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c23f8ccf-137e-4285-892f-1991003c951c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../config/seq_00.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../config/seq_00.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../config/seq_01.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../config/seq_01.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../config/seq_02.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../config/seq_02.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../config/seq_05.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../config/seq_05.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../config/seq_07.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../config/seq_07.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../include/tools/erasor_utils.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../include/tools/erasor_utils.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rviz/deprecated/complement_comparison.rviz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rviz/deprecated/drbfactory_demonstration.rviz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rviz/deprecated/entrance_demonstration.rviz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rviz/deprecated/ground.rviz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rviz/deprecated/ground_body.rviz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rviz/deprecated/kitti_mapgen.rviz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rviz/deprecated/korea_univ_demonstration.rviz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rviz/deprecated/map_comparison.rviz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rviz/deprecated/map_comparison_exag.rviz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rviz/deprecated/mapupdater_body.rviz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rviz/deprecated/parkinglot_demonstration.rviz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rviz/deprecated/scdr_bodyframe_seq1.rviz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rviz/deprecated/scdr_bodyframe_tmp.rviz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rviz/deprecated/vizmap.rviz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rviz/deprecated/w16_demonstration.rviz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rviz/erasor_map.rviz" beforeDir="false" afterPath="$PROJECT_DIR$/../../rviz/erasor_map.rviz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analysis_check.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/analysis_octomap.py" beforeDir="false" afterPath="$PROJECT_DIR$/analysis_octomap.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/compare_map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/compare_map.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/mapgen/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/mapgen/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/mapgen/mapgen.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/mapgen/mapgen.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/online_map_updater/src/OnlineMapUpdater.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/online_map_updater/src/OnlineMapUpdater.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitti2node.py" beforeDir="false" afterPath="$PROJECT_DIR$/kitti2node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pykitti/odometry.py" beforeDir="false" afterPath="$PROJECT_DIR$/pykitti/odometry.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +42,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="preferences.general" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -254,5 +226,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

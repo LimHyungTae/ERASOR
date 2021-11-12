@@ -189,8 +189,7 @@ public:
     }
 
     void accumPointCloud(
-            const erasor::node &data, pcl::PointCloud<pcl::PointXYZI>::Ptr mapOut,
-            pcl::PointCloud<pcl::PointXYZI>::Ptr currOut, nav_msgs::Path &path) {
+            const erasor::node &data, nav_msgs::Path &path) {
         geometry_msgs::PoseStamped pose_stamped;
         pose_stamped.header          = data.header;
         pose_stamped.header.frame_id = "/map";
@@ -240,33 +239,32 @@ public:
 
             if (data.header.seq == last_ts) {
                 // Original
-                std::string original_dir =
-                                    save_path + "/" + seq + "_" + init_stamp +
-                                    "_to_" + final_stamp + "_w_interval" + std::to_string(interval) + "_voxel_" + std::to_string(leafsize) +
-                                    "_original.pcd";
-                pcl::io::savePCDFileASCII(original_dir, cloud_map);
-
-                pcl::PointCloud<pcl::PointXYZI>::Ptr ptr_map(new pcl::PointCloud<pcl::PointXYZI>);
-                *ptr_map = cloud_map;
-                std::cout << "\033[1;32m On voxelizing...\033[0m" << std::endl;
-                erasor_utils::voxelize_preserving_labels(ptr_map, cloud_map, leafsize);
-                std::string map_dir = save_path + "/" + seq + "_" + init_stamp +
-                                    "_to_" + final_stamp + "_w_interval" + std::to_string(interval) + "_voxel_" + std::to_string(leafsize) +
-                                    ".pcd";
-                cloud_map.width  = cloud_map.points.size();
-                cloud_map.height = 1;
-                std::cout << "[Debug]: " << cloud_map.width << ", " << cloud_map.height << ", " << cloud_map.points.size() << std::endl;
-                std::cout << "\033[1;32m Saving the map to pcd...\033[0m" << std::endl;
-                pcl::io::savePCDFileASCII(map_dir, cloud_map);
-                std::cout << "\033[1;32m Complete to save the map!\033[0m" << std::endl;
-                std::cout << data.header.seq << std::endl;
             }
             ++accum_count;
         }
 
-        *mapOut  = cloud_map;
-        *currOut = cloud_curr;
+    }
+    void getPointClouds(pcl::PointCloud<pcl::PointXYZI>::Ptr map_out,
+                        pcl::PointCloud<pcl::PointXYZI>::Ptr curr_out){
+        *map_out  = cloud_map;
+        *curr_out = cloud_curr;
+    }
 
+    void saveNaiveMap(const std::string& original_dir, const std::string& map_dir){
+
+        pcl::io::savePCDFileASCII(original_dir, cloud_map);
+
+        pcl::PointCloud<pcl::PointXYZI>::Ptr ptr_map(new pcl::PointCloud<pcl::PointXYZI>);
+        *ptr_map = cloud_map;
+        std::cout << "\033[1;32m On voxelizing...\033[0m" << std::endl;
+        erasor_utils::voxelize_preserving_labels(ptr_map, cloud_map, leafsize);
+
+        cloud_map.width  = cloud_map.points.size();
+        cloud_map.height = 1;
+        std::cout << "[Debug]: " << cloud_map.width << ", " << cloud_map.height << ", " << cloud_map.points.size() << std::endl;
+        std::cout << "\033[1;32m Saving the map to pcd...\033[0m" << std::endl;
+        pcl::io::savePCDFileASCII(map_dir, cloud_map);
+        std::cout << "\033[1;32m Complete to save the map!\033[0m" << std::endl;
 
     }
 };

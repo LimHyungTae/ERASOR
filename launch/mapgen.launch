@@ -3,7 +3,8 @@
 <node name="kitti_mapgen" pkg="erasor" type="kitti_mapgen" output="screen">
     <rosparam param="/map/voxelsize">0.2</rosparam>		
     <rosparam param="/map/target_rosbag">"05_2350_to_2670_w_interval_2_node.bag"</rosparam>
-    <rosparam param="/map/save_path">"/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src_0_2_test"</rosparam>
+    <rosparam param="/map/save_path">"/media/shapelim/UX960NVMe1/deep_express/kitti_rosbag"</rosparam>
+    <rosparam param="/map/viz_interval">1</rosparam>
 </node>
 
 <node name="rviz" pkg="rviz" type="rviz" args="-d $(find erasor)/rviz/kitti_mapgen.rviz"/>

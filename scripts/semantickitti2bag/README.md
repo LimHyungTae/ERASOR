@@ -1,9 +1,9 @@
-python kitti2bag.py -t None -r None -s 00 --kitti_type "odom_noimg"
+Date: 21.11.12
 
-# Data Generation (Ours)
+# Data Generation for ERASOR (Ours)
 
 ```
-python kitti2imnode.py -t None -r None -s 00 --kitti_type "odom_noimg"
+python kitti2node.py -t None -r None -s 00 --kitti_type "odom_noimg"
 ```
 
 Set range in 382 line.
@@ -15,6 +15,8 @@ rosbag play
 rosrun scdr kitti_mapgen
 ```
 # Remember!!!
+
+**For the lastmile project, the poses.txt is changed to gt poses!!!**
 
 Add [0] is important since the cpp drop the first data. (kitti2imnode on 383 line)
     

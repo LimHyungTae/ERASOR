@@ -100,8 +100,7 @@ def save_dynamic_tf(bag, kitti, kitti_type, initial_time):
             tf_msg.transforms.append(tf_stamped)
 
             bag.write('/tf', tf_msg, tf_msg.transforms[0].header.stamp)
-	    
-	    odom_msg = Odometry()
+            odom_msg = Odometry()
             odom_msg.header.stamp = rospy.Time.from_sec(timestamp)
             odom_msg.header.frame_id = 'world'
             odom_msg.child_frame_id = 'camera_left'
@@ -357,6 +356,9 @@ def main():
     parser.add_argument("-t", "--date", default=None, help="date of the raw dataset (i.e. 2011_09_26), option is only for RAW datasets.")
     parser.add_argument("-r", "--drive", default=None, help="drive number of the raw dataset (i.e. 0001), option is only for RAW datasets.")
     parser.add_argument("-s", "--sequence", default="00", choices=odometry_sequences, help="sequence of the odometry dataset (between 00 - 21), option is only for ODOMETRY datasets.")
+    parser.add_argument("-i", "--init_stamp", default=0, type=int)
+    parser.add_argument("-itv", "--interval", default=2, type=int)
+    parser.add_argument("-e", "--end_stamp", default=1000, type=int)
     args = parser.parse_args()
 
     bridge = CvBridge()
@@ -379,9 +381,10 @@ def main():
         sys.exit(1)
 
     # Add [0] is important since the cpp drop the first data.
-    init_stamp = 824
-    final_stamp = 1452
-    interval = 2
+    init_stamp = args.init_stamp
+    final_stamp = args.end_stamp
+    interval = args.interval
+
     frame_range = [init_stamp] + range(init_stamp, final_stamp, interval)
     bag = rosbag.Bag(os.path.join(args.savedir, "{}_{}_to_{}_w_interval_{}_node.bag".format(args.sequence, init_stamp,
                                                                                               final_stamp, interval)),

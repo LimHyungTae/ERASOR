@@ -1,4 +1,5 @@
 #include "mapgen.hpp"
+#include "signal.h"
 
 mapgen mapgenerator;
 
@@ -6,19 +7,58 @@ ros::Publisher cloudPublisher;
 ros::Publisher mapPublisher;
 ros::Publisher pathPublisher;
 nav_msgs::Path path;
+
 using namespace erasor;
 
+std::string sequence;
+std::string init_stamp;
+std::string final_stamp;
+std::string save_path;
+
+int   interval;
+int   viz_interval;
+
+float voxelsize;
+
+void signal_callback_handler(int signum) {
+    cout << "Caught Ctrl + c " << endl;
+    // Terminate program
+    exit(signum);
+}
+
 void callbackData(const node msg) {
-    pcl::PointCloud<pcl::PointXYZI>::Ptr cloudCurr(new pcl::PointCloud<pcl::PointXYZI>());
-    pcl::PointCloud<pcl::PointXYZI>::Ptr cloudMap(new pcl::PointCloud<pcl::PointXYZI>());
+    signal(SIGINT, signal_callback_handler);
+    mapgenerator.accumPointCloud(msg, path);
+    if (msg.header.seq >= std::stoi(final_stamp)){
 
-    std::cout << "[MAPGEN] " << msg.header.seq << "th sequence come" << std::endl;
-    mapgenerator.accumPointCloud(msg, cloudMap, cloudCurr, path);
-    std::cout << "# of map: " << (*cloudMap).size() << " # of curr: " << (*cloudCurr).size() << std::endl;
+        std::string original_dir =
+                            save_path + "/" + sequence + "_" + init_stamp +
+                            "_to_" + final_stamp + "_w_interval" + std::to_string(interval) + "_voxel_" + std::to_string(voxelsize) +
+                            "_original.pcd";
 
-    cloudPublisher.publish(erasor_utils::cloud2msg(*cloudCurr));
-    mapPublisher.publish(erasor_utils::cloud2msg(*cloudMap));
-    pathPublisher.publish(path);
+        std::string map_dir = save_path + "/" + sequence + "_" + init_stamp +
+                              "_to_" + final_stamp + "_w_interval" + std::to_string(interval) + "_voxel_" + std::to_string(voxelsize) +
+                              ".pcd";
+
+        mapgenerator.saveNaiveMap(original_dir, map_dir);
+    }
+
+    // Visualization
+    static int cnt = 0;
+    if ((cnt % viz_interval) == 0){
+        pcl::PointCloud<pcl::PointXYZI>::Ptr cloudCurr(new pcl::PointCloud<pcl::PointXYZI>());
+        pcl::PointCloud<pcl::PointXYZI>::Ptr cloudMap(new pcl::PointCloud<pcl::PointXYZI>());
+
+        std::cout << "[MAPGEN] " << msg.header.seq << "th sequence come" << std::endl;
+        mapgenerator.getPointClouds(cloudMap, cloudCurr);
+        std::cout << "# of map: " << (*cloudMap).size() << " # of curr: " << (*cloudCurr).size() << std::endl;
+
+        cloudPublisher.publish(erasor_utils::cloud2msg(*cloudCurr));
+        mapPublisher.publish(erasor_utils::cloud2msg(*cloudMap));
+        pathPublisher.publish(path);
+    }
+    cnt++;
+
 }
 
 std::vector<std::string> parse_rosbag_name(std::string& rosbag_name){
@@ -34,25 +74,20 @@ std::vector<std::string> parse_rosbag_name(std::string& rosbag_name){
     return string_parsed;
 
 }
+
+
 int main(int argc, char **argv) {
     ros::init(argc, argv, "merger");
     ros::NodeHandle nodeHandler;
     std::cout << "KiTTI MAPGEN STARTED" << std::endl;
 
     std::string target_rosbag;
-    std::string sequence;
-    std::string init_stamp;
-    std::string final_stamp;
-    std::string save_path;
-
-    float voxelsize;
-    int   interval;
-
 
 
     nodeHandler.param("/map/voxelsize", voxelsize, (float) 0.05);
     nodeHandler.param<std::string>("/map/target_rosbag", target_rosbag, "/");
     nodeHandler.param<std::string>("/map/save_path", save_path, "/");
+    nodeHandler.param<int>("/map/viz_interval", viz_interval, 10);
 
     auto name_parsed = parse_rosbag_name(target_rosbag);
     sequence = name_parsed[0];
