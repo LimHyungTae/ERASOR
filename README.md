@@ -22,7 +22,7 @@ Advisor: Hyun Myung (hmyung@kaist.ac.kr)
 
 ## NEWS (Recent update: Oct., 2021) 
 - An example of running ERASOR in your own env. is provided.
-    - Please refer to please refer to `src/online_map_updater/erasor_main.cpp` file and `run_erasor_in_your_env.launch` file and below [instruction](#ERASOR-in-the-Wild).
+    - Please refer to please refer to `src/offline_map_updater/erasor_main.cpp` file and `run_erasor_in_your_env.launch` file and below [instruction](#ERASOR-in-the-Wild).
 ---
 
 ## Contents
@@ -215,7 +215,7 @@ Satellite map                 |  Pcd map by LIO-SAM
 ![](img/demo/bongeunsa_satellite.png) |  ![](img/demo/bongeunsa_map.png)
 
 
-When **running ERASOR in your own environments**, please refer to `src/online_map_updater/erasor_main.cpp` file and `run_erasor_in_your_env.launch`.
+When **running ERASOR in your own environments**, please refer to `src/offline_map_updater/erasor_main.cpp` file and `run_erasor_in_your_env.launch`.
 
 You can learn how to set experimental setting by repeating our pre-set configurations. Please follow our instructions.
 

@@ -1,4 +1,6 @@
 cmake-build-release*
+cmake-build-debug*
+vscode*
 .idea*
 # Created by https://www.gitignore.io/api/c++,code,cmake,eclipse
 # Edit at https://www.gitignore.io/?templates=c++,code,cmake,eclipse
