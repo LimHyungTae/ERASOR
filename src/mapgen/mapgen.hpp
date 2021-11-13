@@ -6,7 +6,7 @@
 #include <math.h>
 
 #define CAR_BODY_SIZE 2.7
-#define NUM_MAP_PC_LARGE_ENOUGH 5000000
+#define NUM_MAP_PC_LARGE_ENOUGH 30000000
 
 struct Cluster {
     double   x;
@@ -33,11 +33,15 @@ private:
     pcl::PointCloud<pcl::PointXYZI> cloud_curr;
     pcl::PointCloud<pcl::PointXYZI> cloud_map;
 
-    pcl::PointCloud<pcl::PointXYZ> dynamic_objects_but_not_moving;
+    // For large-scale map building
+    // ROS can publish point cloud whose volume is under the 1 GB
+    std::vector<pcl::PointCloud<pcl::PointXYZI> > cloud_maps;
 
     nav_msgs::Path odom_path;
     float          leafsize;
     std::string    seq, init_stamp, final_stamp, save_path;
+
+    bool is_large_scale;
 
     // --- check dynamic objects ---
     double                               movement_thr    = 1.0;
@@ -172,7 +176,7 @@ public:
     }
     ~mapgen() {}
 
-    void setValue(std::string pcd_save_path,float voxelsize, std::string sequence, std::string init_time_stamp, std::string final_time_stamp, int frame_interval) {
+    void setValue(std::string pcd_save_path,float voxelsize, std::string sequence, std::string init_time_stamp, std::string final_time_stamp, int frame_interval, bool is_map_large_scale) {
         save_path   = pcd_save_path;
         leafsize    = voxelsize;
         seq         = sequence;
@@ -183,9 +187,12 @@ public:
         last_ts     = std::stoi(final_stamp);
         init_ts     = std::stoi(init_stamp);
 
+        is_large_scale = is_map_large_scale;
+
         std::cout << "[MapGen]: Voxelization size - " << leafsize << std::endl;
         std::cout << "[MapGen]: Target seq -  " << seq << std::endl;
-        std::cout << init_stamp << ", " << final_stamp << std::endl;
+        std::cout << "[MapGen]: From " << init_stamp << ", " << final_stamp << std::endl;
+        std::cout << "[MapGen]: Is the map large-scale? " << is_large_scale << std::endl;
     }
 
     void accumPointCloud(
@@ -237,8 +244,18 @@ public:
         } else {
             cloud_map += cloud_curr;
 
-            if (data.header.seq == last_ts) {
-                // Original
+            if (is_large_scale) {
+                static int cnt_voxel = 0;
+                if (cnt_voxel++ % 500 == 0){
+                    pcl::PointCloud<pcl::PointXYZI>::Ptr ptr_map(new pcl::PointCloud<pcl::PointXYZI>);
+                    *ptr_map = cloud_map;
+                    std::cout << "\033[1;32m Voxelizing submap...\033[0m" << std::endl;
+                    erasor_utils::voxelize_preserving_labels(ptr_map, cloud_map, leafsize);
+
+                    cloud_maps.push_back(cloud_map);
+                    cloud_map.clear();
+                }
+
             }
             ++accum_count;
         }
@@ -251,19 +268,34 @@ public:
     }
 
     void saveNaiveMap(const std::string& original_dir, const std::string& map_dir){
+        pcl::PointCloud<pcl::PointXYZI> cloud_src;
 
-        pcl::io::savePCDFileASCII(original_dir, cloud_map);
+        if (is_large_scale){
+            for (const auto & submap: cloud_maps){
+                cloud_src += submap;
+            }
+        }else{
+            cloud_src = cloud_map;
+        }
+
+
+        pcl::io::savePCDFileASCII(original_dir, cloud_src);
 
         pcl::PointCloud<pcl::PointXYZI>::Ptr ptr_map(new pcl::PointCloud<pcl::PointXYZI>);
-        *ptr_map = cloud_map;
-        std::cout << "\033[1;32m On voxelizing...\033[0m" << std::endl;
-        erasor_utils::voxelize_preserving_labels(ptr_map, cloud_map, leafsize);
+        pcl::PointCloud<pcl::PointXYZI> cloud_out;
+        ptr_map->points.reserve(cloud_src.points.size());
 
-        cloud_map.width  = cloud_map.points.size();
-        cloud_map.height = 1;
-        std::cout << "[Debug]: " << cloud_map.width << ", " << cloud_map.height << ", " << cloud_map.points.size() << std::endl;
+        std::cout << "\033[1;32m Start to copy pts...\033[0m" << std::endl;
+        *ptr_map = cloud_src;
+        std::cout << "[Debug]: " << cloud_src.width << ", " << cloud_src.height << ", " << cloud_src.points.size() << std::endl;
+        std::cout << "\033[1;32m On voxelizing...\033[0m" << std::endl;
+        erasor_utils::voxelize_preserving_labels(ptr_map, cloud_out, leafsize);
+
+        cloud_out.width  = cloud_out.points.size();
+        cloud_out.height = 1;
+        std::cout << "[Debug]: " << cloud_out.width << ", " << cloud_out.height << ", " << cloud_out.points.size() << std::endl;
         std::cout << "\033[1;32m Saving the map to pcd...\033[0m" << std::endl;
-        pcl::io::savePCDFileASCII(map_dir, cloud_map);
+        pcl::io::savePCDFileASCII(map_dir, cloud_out);
         std::cout << "\033[1;32m Complete to save the map!\033[0m" << std::endl;
 
     }

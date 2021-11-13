@@ -1,5 +1,4 @@
 #include "mapgen.hpp"
-#include "signal.h"
 
 mapgen mapgenerator;
 
@@ -18,29 +17,32 @@ std::string save_path;
 int   interval;
 int   viz_interval;
 
+bool is_large_scale;
+
 float voxelsize;
 
-void signal_callback_handler(int signum) {
-    cout << "Caught Ctrl + c " << endl;
-    // Terminate program
-    exit(signum);
+void saveGlobalMap(){
+    std::string original_dir =
+                        save_path + "/" + sequence + "_" + init_stamp +
+                        "_to_" + final_stamp + "_w_interval" + std::to_string(interval) + "_voxel_" + std::to_string(voxelsize) +
+                        "_original.pcd";
+
+    std::string map_dir = save_path + "/" + sequence + "_" + init_stamp +
+                          "_to_" + final_stamp + "_w_interval" + std::to_string(interval) + "_voxel_" + std::to_string(voxelsize) +
+                          ".pcd";
+
+    mapgenerator.saveNaiveMap(original_dir, map_dir);
+}
+void callbackSaveFlag(const std_msgs::Float32::ConstPtr &msg) {
+    std::cout << "Flag comes!" << std::endl;
+    saveGlobalMap();
 }
 
 void callbackData(const node msg) {
-    signal(SIGINT, signal_callback_handler);
+    signal(SIGINT, erasor_utils::signal_callback_handler);
     mapgenerator.accumPointCloud(msg, path);
     if (msg.header.seq >= std::stoi(final_stamp)){
-
-        std::string original_dir =
-                            save_path + "/" + sequence + "_" + init_stamp +
-                            "_to_" + final_stamp + "_w_interval" + std::to_string(interval) + "_voxel_" + std::to_string(voxelsize) +
-                            "_original.pcd";
-
-        std::string map_dir = save_path + "/" + sequence + "_" + init_stamp +
-                              "_to_" + final_stamp + "_w_interval" + std::to_string(interval) + "_voxel_" + std::to_string(voxelsize) +
-                              ".pcd";
-
-        mapgenerator.saveNaiveMap(original_dir, map_dir);
+        saveGlobalMap();
     }
 
     // Visualization
@@ -76,6 +78,9 @@ std::vector<std::string> parse_rosbag_name(std::string& rosbag_name){
 }
 
 
+
+
+
 int main(int argc, char **argv) {
     ros::init(argc, argv, "merger");
     ros::NodeHandle nodeHandler;
@@ -88,6 +93,7 @@ int main(int argc, char **argv) {
     nodeHandler.param<std::string>("/map/target_rosbag", target_rosbag, "/");
     nodeHandler.param<std::string>("/map/save_path", save_path, "/");
     nodeHandler.param<int>("/map/viz_interval", viz_interval, 10);
+    nodeHandler.param<bool>("/map/is_large_scale", is_large_scale, false);
 
     auto name_parsed = parse_rosbag_name(target_rosbag);
     sequence = name_parsed[0];
@@ -95,12 +101,13 @@ int main(int argc, char **argv) {
     final_stamp = name_parsed[3];
     interval = std::stoi(name_parsed[6]);
 
-    mapgenerator.setValue(save_path, voxelsize, sequence, init_stamp, final_stamp, interval);
+    mapgenerator.setValue(save_path, voxelsize, sequence, init_stamp, final_stamp, interval, is_large_scale);
     mapPublisher   = nodeHandler.advertise<sensor_msgs::PointCloud2>("/mapgen/map", 100);
     cloudPublisher = nodeHandler.advertise<sensor_msgs::PointCloud2>("/mapgen/curr", 100);
     pathPublisher  = nodeHandler.advertise<nav_msgs::Path>("/path", 100);
 
-    ros::Subscriber subData = nodeHandler.subscribe<node>("/node/combined/optimized", 1000, callbackData);
+    ros::Subscriber subData = nodeHandler.subscribe<node>("/node/combined/optimized", 3000, callbackData);
+    ros::Subscriber subSaveFlag = nodeHandler.subscribe<std_msgs::Float32>("/saveflag", 1000, callbackSaveFlag);
     ros::spin();
 
     return 0;

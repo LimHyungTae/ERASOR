@@ -161,6 +161,7 @@ def evaluate(gt, estimate, voxelsize=0.2):
     num_estimate = count_static_and_dynamic(estimate.pc_data['intensity'])
 
     contents = []
+    # Print class-wise rejection rate
     for dyn_class in DYNAMIC_CLASSES:
         if num_gt[dyn_class] == 0:
             line = [dyn_class, "N/A", "N/A", "N/A"]

@@ -6,7 +6,6 @@
 #include "tools/erasor_utils.hpp"
 #include <boost/format.hpp>
 #include <cstdlib>
-#include <signal.h>
 
 // Heuristic, yet boosting speed by vector.reserve()
 #define MAP_CLOUD_LARGE_ENOUGH 2000000
@@ -20,12 +19,6 @@ float VOXEL_SIZE, MAX_RANGE;
 std::string filename = "/staticmap_via_erasor.pcd";
 
 using PointType = pcl::PointXYZI;
-
-void signal_callback_handler(int signum) {
-    std::cout << "Caught signal " << signum << std::endl;
-    // Terminate program
-    std::exit(signum);
-}
 
 void fetch_VoI(
         Eigen::Matrix4f& pose, double max_range,
@@ -185,7 +178,7 @@ int main(int argc, char **argv)
 
     int N = poses.size();
     for (int i = INIT_IDX; i < N; ++i) {
-        signal(SIGINT, signal_callback_handler);
+        signal(SIGINT, erasor_utils::signal_callback_handler);
         if (i % INTERVAL != 0) continue;
 
         std::cout<<i<<" / "<< N<<" th operation"<<std::endl;

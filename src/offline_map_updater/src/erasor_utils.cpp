@@ -136,4 +136,9 @@ namespace erasor_utils {
         num_static  = tmp_static;
         num_dynamic = tmp_dynamic;
     }
+
+    void signal_callback_handler(int signum) {
+    cout << "Caught Ctrl + c " << endl;
+    exit(signum);
+    }
 }

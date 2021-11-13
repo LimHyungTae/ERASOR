@@ -142,6 +142,8 @@ void OnlineMapUpdater::callback_flag(const std_msgs::Float32::ConstPtr &msg) {
  * @brief Callback function for node data
  */
 void OnlineMapUpdater::callback_node(const erasor::node::ConstPtr &msg) {
+    signal(SIGINT, erasor_utils::signal_callback_handler);
+
     static int stack_count = 0;
     stack_count++;
 

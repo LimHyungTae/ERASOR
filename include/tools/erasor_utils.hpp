@@ -44,6 +44,8 @@
 #include <tf/transform_broadcaster.h>
 #include <std_msgs/Float32.h>
 #include <std_msgs/Int32.h>
+#include "signal.h"
+
 
 namespace erasor_utils {
     template<typename T>
@@ -101,5 +103,8 @@ namespace erasor_utils {
     void voxelize_preserving_labels(pcl::PointCloud<pcl::PointXYZI>::Ptr src, pcl::PointCloud<pcl::PointXYZI> &dst, double leaf_size);
 
     void count_stat_dyn(const pcl::PointCloud<pcl::PointXYZI> &cloudIn, int &num_static, int &num_dynamic);
+
+    void signal_callback_handler(int signum);
+
 }
 #endif // ERASOR_UTILS_H
