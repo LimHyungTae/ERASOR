@@ -71,12 +71,6 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 #target_link_libraries(compare_complement ${catkin_LIBRARIES})
 #add_dependencies(compare_complement erasor_generate_messages_cpp)
 #
-#
-#add_executable(mapviz src/test_codes/viz_map.cpp ${unavlib_source})
-#target_link_libraries(mapviz ${catkin_LIBRARIES})
-#add_dependencies(mapviz erasor_generate_messages_cpp)
-#
-#
 #add_executable(merge_map src/test_codes/merge_map.cpp ${unavlib_source})
 #target_link_libraries(merge_map ${catkin_LIBRARIES})
 #add_dependencies(merge_map erasor_generate_messages_cpp)
@@ -88,6 +82,10 @@ set(erasor_src
         src/offline_map_updater/src/erasor.cpp
         src/offline_map_updater/src/erasor_utils.cpp
 )
+
+add_executable(viz_kitti_map src/test_codes/viz_kitti_map.cpp src/offline_map_updater/src/erasor_utils.cpp)
+target_link_libraries(viz_kitti_map ${catkin_LIBRARIES})
+add_dependencies(viz_kitti_map erasor_generate_messages_cpp)
 
 add_executable(offline_map_updater src/offline_map_updater/main_kitti.cpp ${erasor_src})
 target_link_libraries(offline_map_updater ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})

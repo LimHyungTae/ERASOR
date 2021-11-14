@@ -191,7 +191,7 @@ def evaluate(gt, estimate, voxelsize=0.2):
     printed_data = gt_data + est_data + [pr, rr, 2 * (pr/100) * (rr/100) / ((pr/100) + (rr/100))]
 
     print(tabulate([printed_data], headers=['# stat. pts', '# dyn. pts', '%', '# est. stat. pts', '# est. dyn. pts',
-                                            '%', 'Preservation', 'rejection', 'F1'], tablefmt='orgtbl'))
+                                            '%', 'Preservation', 'rejection', 'F1'], tablefmt='github'))
 def load_pcd(path):
     print("On loading data...")
     data = pypcd.PointCloud.from_path(path)

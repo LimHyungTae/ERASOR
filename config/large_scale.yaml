@@ -18,8 +18,8 @@ erasor:
 
 
 MapUpdater:
-    data_name: "05"
-    initial_map_path: "/media/shapelim/UX960NVMe1/deep_express/kitti_rosbag/05_0_to_2760_w_interval2_voxel_0.200000.pcd"
+    data_name: "00"
+    initial_map_path: "/media/shapelim/UX960NVMe1/deep_express/kitti_rosbag/00_0_to_4540_w_interval2_voxel_0.200000.pcd"
     env: "outdoor"
     save_path: "/media/shapelim/UX960NVMe1/deep_express/kitti_rosbag/output"
     query_voxel_size: 0.2

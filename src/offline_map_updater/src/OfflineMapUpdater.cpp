@@ -306,7 +306,6 @@ void OfflineMapUpdater::callback_node(const erasor::node::ConstPtr &msg) {
 //        }
         if (environment_ != "outdoor") { throw invalid_argument("Other modes are not supported"); }
 
-
         print_status();
 
         publish(*ptr_query_viz, pub_debug_pc2_curr_);
