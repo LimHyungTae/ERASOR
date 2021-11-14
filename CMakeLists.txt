@@ -84,12 +84,12 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 
 # Online Map refinement
 set(erasor_src
-        src/offline_map_updater/src/OnlineMapUpdater.cpp
+        src/offline_map_updater/src/OfflineMapUpdater.cpp
         src/offline_map_updater/src/erasor.cpp
         src/offline_map_updater/src/erasor_utils.cpp
 )
 
-add_executable(offline_map_updater src/offline_map_updater/erasor_main.cpp ${erasor_src})
+add_executable(offline_map_updater src/offline_map_updater/main_kitti.cpp ${erasor_src})
 target_link_libraries(offline_map_updater ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 add_dependencies(offline_map_updater erasor_generate_messages_cpp)
 

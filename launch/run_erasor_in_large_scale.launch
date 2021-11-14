@@ -1,6 +1,7 @@
 <launch>
 
 <node name="offline_map_updater" pkg="erasor" type="offline_map_updater" output="screen">
+    <rosparam param="/large_scale/is_large_scale">true</rosparam>
 </node>
 <node name="rviz" pkg="rviz" type="rviz" args="-d $(find erasor)/rviz/erasor_map.rviz"/>
 <node name="rviz_body" pkg="rviz" type="rviz" args="-d $(find erasor)/rviz/srt.rviz"/>

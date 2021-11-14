@@ -514,17 +514,20 @@ void ERASOR::compare_vois_and_revert_ground_w_block(int frame) {
                     // ---------------------------------
                     //     NOTE: Ground is retrieved!
                     // ---------------------------------
-//          origin_total += bin_map.points; //for analyze
 
                     if (!piecewise_ground_.empty()) piecewise_ground_.clear();
                     if (!non_ground_.empty()) non_ground_.clear();
 
-//          count_stat_dyn(bin_map.points, num_origin_stat, num_origin_dyn);
                     extract_ground(bin_map.points, piecewise_ground_, non_ground_);
+                    /*** It potentially requires lots of memories... */
                     r_pod_selected[r][theta].points += piecewise_ground_;
-                    erasor_utils::count_stat_dyn(piecewise_ground_, num_ground_stat, num_ground_dyn);
-//          out_r_gpf<< num_origin_stat<<","<< num_origin_dyn <<","<< num_ground_stat<<","<<num_ground_dyn<<"\n";
 
+                    /*** Thus, voxelization is conducted */
+                    pcl::PointCloud<pcl::PointXYZI>::Ptr tmp(new pcl::PointCloud<pcl::PointXYZI>);
+                    *tmp = r_pod_selected[r][theta].points;
+                    erasor_utils::voxelize_preserving_labels(tmp, r_pod_selected[r][theta].points, map_voxel_size_);
+
+                    erasor_utils::count_stat_dyn(piecewise_ground_, num_ground_stat, num_ground_dyn);
                     ground_viz += piecewise_ground_;
                     debug_map_rejected += non_ground_;
 
@@ -549,9 +552,6 @@ void ERASOR::compare_vois_and_revert_ground_w_block(int frame) {
 
                     poly_list.likelihood.push_back(BLOCKED);
                 } else {
-//          Bin bin_merged;
-//          merge_bins(bin_curr, bin_map, bin_merged);
-//          r_pod_selected[r][theta] = bin_merged;
                     // NOTE the dynamic object comes ....:(
                     r_pod_selected[r][theta] = bin_map;
                     r_pod_selected[r][theta].status = MERGE_BINS;
@@ -562,14 +562,6 @@ void ERASOR::compare_vois_and_revert_ground_w_block(int frame) {
         }
     }
 
-//  count_stat_dyn(origin_total, num_origin_stat, num_origin_dyn);
-//  extract_ground(origin_total, ground_total, dummy_non_ground);
-//  count_stat_dyn(ground_total, num_ground_stat, num_ground_dyn);
-//  out_gpf<< num_origin_stat<<","<< num_origin_dyn <<","<< num_ground_stat<<","<<num_ground_dyn<<"\n";
-//  out_gpf.close();
-//  out_r_gpf.close();
-
-//  std::cout<<"Num. of dynamic candidates: "<<dynamic_count<<std::endl;
     // For debugging
     sensor_msgs::PointCloud2 pc2_map_r  = erasor_utils::cloud2msg(debug_map_rejected);
     sensor_msgs::PointCloud2 pc2_curr_r = erasor_utils::cloud2msg(debug_curr_rejected);
@@ -629,7 +621,6 @@ void ERASOR::get_static_estimate(
     sensor_msgs::PointCloud2 pc2_arranged       = erasor_utils::cloud2msg(arranged);
     sensor_msgs::PointCloud2 pc2_map_complement = erasor_utils::cloud2msg(complement);
     pub_arranged.publish(pc2_arranged);
-    ROS_INFO_STREAM("After: \033[1;34m" << complement.points.size() << "\033[0m " << arranged.points.size());
 }
 
 double ERASOR::get_max_range() {return max_r;}

@@ -58,6 +58,7 @@ public:
         nh.param("/erasor/gf_iter", iter_groundfilter_, 3);
         nh.param("/erasor/gf_num_lpr", num_lprs_, 10);
         nh.param("/erasor/gf_th_seeds_height", th_seeds_heights_, 0.5);
+        nh.param("/erasor/map_voxel_size", map_voxel_size_, 0.2);
 
         ring_size   = max_r / num_rings;
         sector_size = 2 * PI / num_sectors;
@@ -169,6 +170,7 @@ private:
     double th_bin_max_h;
     int    minimum_num_pts;
     double rejection_ratio;
+    double map_voxel_size_;
 
     double xy2theta(const double &x, const double &y);
 

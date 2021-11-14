@@ -13,11 +13,12 @@ erasor:
     gf_iter: 3
     gf_num_lpr: 20
     gf_th_seeds_height: 0.5
+    map_voxel_size: 0.2
     version: 3 # 2: R-GPF / 3: R-GPF w/ blocking (not in paper)
 
 
 MapUpdater:
-    data_name: "00"
+    data_name: "05"
     initial_map_path: "/media/shapelim/UX960NVMe1/deep_express/kitti_rosbag/05_0_to_2760_w_interval2_voxel_0.200000.pcd"
     env: "outdoor"
     save_path: "/media/shapelim/UX960NVMe1/deep_express/kitti_rosbag/output"
