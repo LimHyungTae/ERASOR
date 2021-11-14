@@ -58,20 +58,20 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 
 ###############
  # Deprecated!
-#add_executable(fill_intensity src/test_codes/fill_removert_intensity.cpp ${unavlib_source})
+#add_executable(fill_intensity src/utils/fill_removert_intensity.cpp ${unavlib_source})
 #target_link_libraries(fill_intensity ${catkin_LIBRARIES})
 #add_dependencies(fill_intensity erasor_generate_messages_cpp)
 #
 #
-#add_executable(compare_map src/test_codes/compare_map.cpp ${unavlib_source})
+#add_executable(compare_map src/utils/compare_map.cpp ${unavlib_source})
 #target_link_libraries(compare_map ${catkin_LIBRARIES})
 #add_dependencies(compare_map erasor_generate_messages_cpp)
 #
-#add_executable(compare_complement src/test_codes/compare_complement.cpp ${unavlib_source})
+#add_executable(compare_complement src/utils/compare_complement.cpp ${unavlib_source})
 #target_link_libraries(compare_complement ${catkin_LIBRARIES})
 #add_dependencies(compare_complement erasor_generate_messages_cpp)
 #
-#add_executable(merge_map src/test_codes/merge_map.cpp ${unavlib_source})
+#add_executable(merge_map src/utils/merge_map.cpp ${unavlib_source})
 #target_link_libraries(merge_map ${catkin_LIBRARIES})
 #add_dependencies(merge_map erasor_generate_messages_cpp)
 ################
@@ -83,7 +83,7 @@ set(erasor_src
         src/offline_map_updater/src/erasor_utils.cpp
 )
 
-add_executable(viz_kitti_map src/test_codes/viz_kitti_map.cpp src/offline_map_updater/src/erasor_utils.cpp)
+add_executable(viz_kitti_map src/utils/viz_kitti_map.cpp src/offline_map_updater/src/erasor_utils.cpp)
 target_link_libraries(viz_kitti_map ${catkin_LIBRARIES})
 add_dependencies(viz_kitti_map erasor_generate_messages_cpp)
 
