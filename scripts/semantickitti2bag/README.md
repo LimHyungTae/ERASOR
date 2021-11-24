@@ -3,7 +3,7 @@ Date: 21.11.12
 # Data Generation for ERASOR (Ours)
 
 ```
-python kitti2node.py -t None -r None -s 00 --kitti_type "odom_noimg"
+python kitti2node.py -t None -r None -s 00 --kitti_type "odom_noimg" --init_stamp 0 --end_stamp 4542
 ```
 
 Set range in 382 line.

@@ -3,7 +3,7 @@ from tqdm import tqdm
 import numpy as np
 from sklearn.neighbors import NearestNeighbors
 from tabulate import tabulate
-DYNAMIC_CLASSES = [252, 253, 254, 255, 256, 257, 259]
+DYNAMIC_CLASSES = [252, 253, 254, 255, 256, 257, 258, 259]
 
 def intensity2labels(intensity_np):
     label = intensity_np.astype(np.uint32)

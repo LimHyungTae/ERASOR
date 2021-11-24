@@ -35,7 +35,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: pc_curr
+    SyncSource: ""
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -542,5 +542,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1440
-  X: 385
-  Y: 139
+  X: 412
+  Y: 48

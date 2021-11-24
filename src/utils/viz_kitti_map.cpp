@@ -65,6 +65,22 @@ void fetch_specific_object(
 }
 
 
+void fetch_specific_class(
+        const pcl::PointCloud<pcl::PointXYZI> &dynamicObjs, uint32_t target_class_num, pcl::PointCloud<pcl::PointXYZI> &targetObj) {
+
+    targetObj.points.clear();
+
+    for (const auto &pt: dynamicObjs.points) {
+        uint32_t float2int      = static_cast<uint32_t>(pt.intensity);
+        uint32_t semantic_label = float2int & 0xFFFF;
+        uint32_t inst_label     = float2int >> 16;
+        if (semantic_label == target_class_num) {
+            std::cout << "Find target cloud" << std::endl;
+            targetObj.points.push_back(pt);
+        }
+    }
+}
+
 void callback_flag(const std_msgs::Float32::ConstPtr &msg) {
     std::cout << "Trying to publish clouds!" << std::endl;
     mapPublisher.publish(map_msg);
@@ -101,7 +117,8 @@ int main(int argc, char **argv) {
     cout << "Load map complete" << endl;
     pcl::PointCloud<pcl::PointXYZI> dynamic_objs, static_objs, target_obj;
     parse_dynamic_obj(*ptr_map, dynamic_objs, static_objs);
-    fetch_specific_object(dynamic_objs, target_class_num, target_id, target_obj);
+    fetch_specific_class(dynamic_objs, target_class_num, target_obj);
+    cout<<"Total "<< target_obj.points.size()<<" Points exist"<<endl;
 
     map_msg           = erasor_utils::cloud2msg(static_objs);
     dyn_obj_msg       = erasor_utils::cloud2msg(dynamic_objs);

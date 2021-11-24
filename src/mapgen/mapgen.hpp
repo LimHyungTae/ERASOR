@@ -270,14 +270,17 @@ public:
     void saveNaiveMap(const std::string& original_dir, const std::string& map_dir){
         pcl::PointCloud<pcl::PointXYZI> cloud_src;
 
+        std::cout << "\033[1;32m On saving point cloud...it may take few seconds...\033[0m" << std::endl;
         if (is_large_scale){
+            // Prvious submaps
             for (const auto & submap: cloud_maps){
                 cloud_src += submap;
             }
+            // Remain map
+            cloud_src += cloud_map;
         }else{
             cloud_src = cloud_map;
         }
-
 
         pcl::io::savePCDFileASCII(original_dir, cloud_src);
 

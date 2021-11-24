@@ -77,10 +77,6 @@ std::vector<std::string> parse_rosbag_name(std::string& rosbag_name){
 
 }
 
-
-
-
-
 int main(int argc, char **argv) {
     ros::init(argc, argv, "merger");
     ros::NodeHandle nodeHandler;
@@ -88,14 +84,14 @@ int main(int argc, char **argv) {
 
     std::string target_rosbag;
 
-
     nodeHandler.param("/map/voxelsize", voxelsize, (float) 0.05);
     nodeHandler.param<std::string>("/map/target_rosbag", target_rosbag, "/");
     nodeHandler.param<std::string>("/map/save_path", save_path, "/");
     nodeHandler.param<int>("/map/viz_interval", viz_interval, 10);
-    // For large-scale map building
-    // Because ROS can publish point cloud whose volume is under the 1 GB
-    // And it is to reduce computational burden
+
+    /*** Below params are for large-scale map building
+    /* Because ROS can publish point cloud whose volume is under the 1 GB
+    /* And it is to reduce computational burden */
     nodeHandler.param<bool>("/large_scale/is_large_scale", is_large_scale, false);
 
     auto name_parsed = parse_rosbag_name(target_rosbag);

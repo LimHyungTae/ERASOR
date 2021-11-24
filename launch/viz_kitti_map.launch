@@ -1,7 +1,8 @@
 <launch>
 
 <node name="viz_kitti_map" pkg="erasor" type="viz_kitti_map" output="screen">
-    <rosparam param="/filename">"/media/shapelim/UX960NVMe1/deep_express/kitti_rosbag/00_0_to_4540_w_interval2_voxel_0.200000.pcd"</rosparam>		
+    <rosparam param="/filename">"/media/shapelim/UX960NVMe1/deep_express/kitti_rosbag/output/08_result.pcd"</rosparam>
+    <rosparam param="/class_num">259</rosparam>		
 </node>
 
 <node name="rviz" pkg="rviz" type="rviz" args="-d $(find erasor)/rviz/viz_kitti_map.rviz"/>
