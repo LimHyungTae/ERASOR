@@ -7,46 +7,14 @@
 #include <cstdlib>
 #include <erasor/OfflineMapUpdater.h>
 
-// Heuristic, yet boosting speed by vector.reserve()
-#define MAP_CLOUD_LARGE_ENOUGH 2000000
-#define QUERY_CLOUD_LARGE_ENOUGH 200000
-
-unique_ptr<ERASOR> ErasorVel16;
-
 string DATA_DIR;
 int INTERVAL, INIT_IDX;
-float VOXEL_SIZE, MAX_RANGE;
+float VOXEL_SIZE;
+bool STOP_FOR_EACH_FRAME;
 std::string filename = "/staticmap_via_erasor.pcd";
 
 using PointType = pcl::PointXYZI;
 
-void fetch_VoI(
-        Eigen::Matrix4f& pose, double max_range,
-        const pcl::PointCloud<PointType> &map,
-        pcl::PointCloud<PointType> &inliers,
-        pcl::PointCloud<PointType> &outskirts,
-        pcl::PointCloud<PointType> &map_voi, std::string mode="naive") {
-    // 1. Divide map_arranged into map_central and map_outskirts
-    static double margin = 0;
-    inliers.clear();
-    outskirts.clear();
-    map_voi.clear();
-
-    if (mode == "naive") {
-        double max_dist_square = pow(max_range + margin, 2);
-        for (auto const &pt : map.points) {
-            double dist_square = pow(pt.x - pose(0, 3), 2) + pow(pt.y - pose(1, 3), 2);
-            if (dist_square < max_dist_square) {
-                inliers.push_back(pt);
-            } else {
-                outskirts.push_back(pt);
-            }
-        }
-    }
-    pcl::PointCloud<PointType>::Ptr ptr_transformed(new pcl::PointCloud<PointType>);
-    pcl::transformPointCloud(inliers, *ptr_transformed, pose.inverse());
-    map_voi = *ptr_transformed;
-}
 
 vector<float> split_line(string input, char delimiter) {
     vector<float> answer;
@@ -90,35 +58,6 @@ void load_all_poses(string txt, vector<Eigen::Matrix4f >& poses){
     std::cout<<"Total "<<count<<" poses are loaded"<<std::endl;
 }
 
-template<typename T>
-void voxelize(const boost::shared_ptr<pcl::PointCloud<T> > srcPtr, pcl::PointCloud<T> &dst, double voxelSize) {
-    static pcl::VoxelGrid<T> voxel_filter;
-    voxel_filter.setInputCloud(srcPtr);
-    voxel_filter.setLeafSize(voxelSize, voxelSize, voxelSize);
-    voxel_filter.filter(dst);
-}
-
-template<typename T>
-void voxelize(const boost::shared_ptr<pcl::PointCloud<T> > srcPtr, boost::shared_ptr<pcl::PointCloud<T> > dstPtr,
-              double voxelSize) {
-    static pcl::VoxelGrid<T> voxel_filter;
-    voxel_filter.setInputCloud(srcPtr);
-    voxel_filter.setLeafSize(voxelSize, voxelSize, voxelSize);
-    voxel_filter.filter(*dstPtr);
-}
-
-
-void set_nav_path(const Eigen::Matrix4f& pose, const int& idx, nav_msgs::Path& path){
-    geometry_msgs::PoseStamped pose_stamped;
-    pose_stamped.header.stamp = ros::Time::now();
-    pose_stamped.header.seq = idx;
-    pose_stamped.header.frame_id = "/map";
-    pose_stamped.pose = erasor_utils::eigen2geoPose(pose);
-
-    path.header = pose_stamped.header;
-    path.poses.push_back(pose_stamped);
-}
-
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "erasor_in_your_env");
@@ -129,6 +68,7 @@ int main(int argc, char **argv)
     nh.param<float>("/voxel_size", VOXEL_SIZE, 0.075);
     nh.param<int>("/init_idx", INIT_IDX, 0);
     nh.param<int>("/interval", INTERVAL, 2);
+    nh.param<bool>("/stop_for_each_frame", STOP_FOR_EACH_FRAME, false);
 
     std::string staticmap_path = std::getenv("HOME") + filename;
 
@@ -173,6 +113,11 @@ int main(int argc, char **argv)
         NodePublisher.publish(node);
         ros::spinOnce();
         loop_rate.sleep();
+
+        if (STOP_FOR_EACH_FRAME) {
+            cout<< "[Debug]: STOP! Press any button to continue" <<endl;
+            cin.ignore();
+        }
     }
 
     updater.save_static_map(0.2);
