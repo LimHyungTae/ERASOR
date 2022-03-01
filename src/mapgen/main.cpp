@@ -40,30 +40,30 @@ void callbackSaveFlag(const std_msgs::Float32::ConstPtr &msg) {
 
 void callbackData(const node msg) {
     signal(SIGINT, erasor_utils::signal_callback_handler);
+    static int cnt = 0;
+    if ((cnt % viz_interval) == 0){
+        std::cout << std::left << setw(nameWidth) << setfill(separator) << "[MAPGEN] " << msg.header.seq << "th frame comes!" << std::endl;
+    }
+
     mapgenerator.accumPointCloud(msg, path);
     if (msg.header.seq >= std::stoi(final_stamp)){
         saveGlobalMap();
     }
 
     // Visualization
-    static int cnt = 0;
     if ((cnt % viz_interval) == 0){
         pcl::PointCloud<pcl::PointXYZI>::Ptr cloudCurr(new pcl::PointCloud<pcl::PointXYZI>());
         pcl::PointCloud<pcl::PointXYZI>::Ptr cloudMap(new pcl::PointCloud<pcl::PointXYZI>());
 
-        std::cout << "[MAPGEN] " << msg.header.seq << "th sequence come" << std::endl;
         mapgenerator.getPointClouds(cloudMap, cloudCurr);
-        std::cout << "# of map: " << (*cloudMap).size() << " # of curr: " << (*cloudCurr).size() << std::endl;
-
         cloudPublisher.publish(erasor_utils::cloud2msg(*cloudCurr));
         mapPublisher.publish(erasor_utils::cloud2msg(*cloudMap));
         pathPublisher.publish(path);
     }
     cnt++;
-
 }
 
-std::vector<std::string> parse_rosbag_name(std::string& rosbag_name){
+std::vector<std::string> parseRosbagName(std::string& rosbag_name){
     std::string delimiter = "_";
     size_t pos = 0;
     std::vector<std::string> string_parsed;
@@ -94,7 +94,7 @@ int main(int argc, char **argv) {
     /* And it is to reduce computational burden */
     nodeHandler.param<bool>("/large_scale/is_large_scale", is_large_scale, false);
 
-    auto name_parsed = parse_rosbag_name(target_rosbag);
+    auto name_parsed = parseRosbagName(target_rosbag);
     sequence = name_parsed[0];
     init_stamp = name_parsed[1];
     final_stamp = name_parsed[3];
