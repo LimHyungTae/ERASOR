@@ -1,0 +1,36 @@
+erasor: 
+    max_range: 9.5
+    num_rings: 8
+    num_sectors: 60
+    min_h: -1.6 # [m] Note that it depends on the distance between body frame and ground contact point of mobile robots
+    max_h: 1.3 # [m] Note that it depends on the distance between body frame and ground contact point of mobile robots
+    th_bin_max_h: -1.0 # [m]
+    scan_ratio_threshold: 0.2 # The Larger, the more aggressive!!
+    minimum_num_pts: 5
+    rejection_ratio: 0
+    gf_dist_thr: 0.075
+    gf_iter: 3
+    gf_num_lpr: 12
+    gf_th_seeds_height: 0.5
+    version: 3 # 2: R-GPF / 3: R-GPF w/ blocking (not in paper)
+
+
+MapUpdater:
+    data_name: "bongeunsa"
+    initial_map_path: "/media/shapelim/UX960NVMe1/deep_express/bongeunsa_dataset/dense_global_map.pcd"
+    env: "outdoor"
+    save_path: "/media/shapelim/UX960NVMe1/deep_express/bongeunsa_dataset"
+    query_voxel_size: 0.075
+    map_voxel_size: 0.075 
+    voxelization_interval: 2
+    removal_interval: 2
+
+# For mapgen
+data_dir: "/media/shapelim/UX960NVMe1/deep_express/bongeunsa_dataset"
+voxel_size: 0.075
+init_idx: 130
+interval: 2
+tf:
+     lidar2body: [0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.0] # xyz q_x, q_y, q_z, q_w in order
+
+verbose: true

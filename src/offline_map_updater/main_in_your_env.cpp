@@ -2,10 +2,10 @@
 // Created by shapelim on 21. 10. 18..
 //
 
-#include "erasor/erasor.h"
 #include "tools/erasor_utils.hpp"
 #include <boost/format.hpp>
 #include <cstdlib>
+#include <erasor/OfflineMapUpdater.h>
 
 // Heuristic, yet boosting speed by vector.reserve()
 #define MAP_CLOUD_LARGE_ENOUGH 2000000
@@ -122,8 +122,9 @@ void set_nav_path(const Eigen::Matrix4f& pose, const int& idx, nav_msgs::Path& p
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "erasor_in_your_env");
-//
     ros::NodeHandle nh;
+    erasor::OfflineMapUpdater updater = erasor::OfflineMapUpdater();
+
     nh.param<string>("/data_dir", DATA_DIR, "/");
     nh.param<float>("/voxel_size", VOXEL_SIZE, 0.075);
     nh.param<int>("/init_idx", INIT_IDX, 0);
@@ -132,14 +133,8 @@ int main(int argc, char **argv)
     std::string staticmap_path = std::getenv("HOME") + filename;
 
     // Set ROS visualization publishers
-    ros::Publisher MapPublisher = nh.advertise<sensor_msgs::PointCloud2>("/map", 100);
-    ros::Publisher ScanPublisher = nh.advertise<sensor_msgs::PointCloud2>("/scan", 100);
-    ros::Publisher PosePublisher = nh.advertise<nav_msgs::Path>("/nav_pose",100);
-    ros::Rate loop_rate(100);
-
-    pcl::PointCloud<PointType> mapRaw;
-    nav_msgs::Path nav_path;
-    mapRaw.reserve(MAP_CLOUD_LARGE_ENOUGH);
+    ros::Publisher NodePublisher = nh.advertise<erasor::node>("/node/combined/optimized", 100);
+    ros::Rate loop_rate(10);
 
     /***
      * Set target data
@@ -153,110 +148,36 @@ int main(int argc, char **argv)
      * In your own case, be careful to set max_h and min_h correctly!
      */
     // Set target data
+    cout << "\033[1;32mTarget directory:" << DATA_DIR << "\033[0m" << endl;
     string raw_map_path = DATA_DIR + "/dense_global_map.pcd";
     string pose_path = DATA_DIR + "/poses_lidar2body.csv";
     string pcd_dir = DATA_DIR + "/pcds"; //
     // Load raw pointcloud
 
-    std::cout << "[Initialization] Try to load naively accumulated map...(it may take some time)" << std::endl;
-    erasor_utils::load_pcd(raw_map_path, mapRaw);
-
-
-    // map_arranged: Output of the filtered map
-    pcl::PointCloud<PointType>::Ptr mapArranged(new pcl::PointCloud<PointType>);
-    *mapArranged = mapRaw;
-    voxelize(mapArranged, mapRaw, 0.1);
-
-    *mapArranged = mapRaw;
-    cout<<raw_map_path<<endl;
-    ErasorVel16.reset(new ERASOR(&nh));
     vector<Eigen::Matrix4f> poses;
     load_all_poses(pose_path, poses);
-    MAX_RANGE = ErasorVel16->get_max_range();
-
-    std::cout << "[Initialization] Loading complete" << std::endl;
 
     int N = poses.size();
+
     for (int i = INIT_IDX; i < N; ++i) {
         signal(SIGINT, erasor_utils::signal_callback_handler);
-        if (i % INTERVAL != 0) continue;
 
-        std::cout<<i<<" / "<< N<<" th operation"<<std::endl;
-        Eigen::Matrix4f targetTf4x4 = poses[i];
-
-        // Current scan
         pcl::PointCloud<PointType>::Ptr srcCloud(new pcl::PointCloud<PointType>);
-        pcl::PointCloud<PointType>::Ptr queryVoI(new pcl::PointCloud<PointType>);
         string pcd_name = (boost::format("%s/%06d.pcd") % pcd_dir % i).str();
         erasor_utils::load_pcd(pcd_name, srcCloud);
 
-        *queryVoI = *srcCloud;
-        // To debug
-        pcl::PointCloud<PointType>::Ptr ptrTransformedCloud(new pcl::PointCloud<PointType>);
-        pcl::transformPointCloud(*srcCloud, *ptrTransformedCloud, targetTf4x4);
-        sensor_msgs::PointCloud2 currCloudMsg = erasor_utils::cloud2msg(*ptrTransformedCloud);
-        ScanPublisher.publish(currCloudMsg);
-
-        // Set VoI
-        pcl::PointCloud<PointType>::Ptr inliers(new pcl::PointCloud<PointType>);
-        pcl::PointCloud<PointType>::Ptr mapVoI(new pcl::PointCloud<PointType>);
-        pcl::PointCloud<PointType>::Ptr mapOutskirt(new pcl::PointCloud<PointType>);
-        // ERASOR outputs
-        pcl::PointCloud<PointType>::Ptr mapStaticPtsBody(new pcl::PointCloud<PointType>);
-        pcl::PointCloud<PointType>::Ptr mapStaticPtsMap(new pcl::PointCloud<PointType>);
-        pcl::PointCloud<PointType>::Ptr mapStaticEstimate(new pcl::PointCloud<PointType>);
-        pcl::PointCloud<PointType>::Ptr mapEgocentricCompelment(new pcl::PointCloud<PointType>);
-        pcl::PointCloud<PointType>::Ptr tmpMapRejected(new pcl::PointCloud<PointType>);
-        pcl::PointCloud<PointType>::Ptr tmpCurrRejected(new pcl::PointCloud<PointType>);
-
-        mapOutskirt->points.reserve(MAP_CLOUD_LARGE_ENOUGH);
-        inliers->points.reserve(QUERY_CLOUD_LARGE_ENOUGH);
-        mapVoI->points.reserve(QUERY_CLOUD_LARGE_ENOUGH);
-
-        fetch_VoI(targetTf4x4, MAX_RANGE, *mapArranged, *inliers, *mapOutskirt, *mapVoI);
-
-        ROS_INFO_STREAM("Before: \033[1;32m" << mapVoI->points.size() <<" vs " << queryVoI->points.size() << "\033[0m ");
-        ErasorVel16->set_inputs(*mapVoI, *queryVoI);
-        int erasor_version_ = 2;
-        if (erasor_version_ == 2) {
-            ErasorVel16->compare_vois_and_revert_ground(i);
-            ErasorVel16->get_static_estimate(*mapStaticEstimate, *mapEgocentricCompelment);
-        // Not in use
-        } else if (erasor_version_ == 3) {
-            ErasorVel16->compare_vois_and_revert_ground_w_block(i);
-            ErasorVel16->get_static_estimate(*mapStaticEstimate, *mapEgocentricCompelment);
-        } else {
-            throw invalid_argument("Other version is not implemented!");
-        }
-        auto end = ros::Time::now().toSec();
-        ErasorVel16->get_outliers(*tmpMapRejected, *tmpCurrRejected);
-
-        *mapStaticPtsBody = *mapStaticEstimate + *mapEgocentricCompelment;
-        pcl::transformPointCloud(*mapStaticPtsBody, *mapStaticPtsMap, targetTf4x4);
-        mapArranged->clear();
-        *mapArranged = *mapStaticPtsMap + *mapOutskirt;
-
-        std::cout << "Voxelization conducted" << std::endl;
-        pcl::PointCloud<PointType>::Ptr tmpMapVoxeled(new pcl::PointCloud<PointType>);
-        voxelize(mapArranged, tmpMapVoxeled, VOXEL_SIZE);
-//        std::cout << "Map cloud: " << mapCloud.points.size() << std::endl;
-        static int cnt = 0;
-        if (++cnt % 5 == 0) {
-            sensor_msgs::PointCloud2 mapCloudMsg = erasor_utils::cloud2msg(*tmpMapVoxeled);
-            MapPublisher.publish(mapCloudMsg);
-            *mapArranged = *tmpMapVoxeled;
-        }
-
-        if (i > N - 10){
-            pcl::io::savePCDFileASCII(staticmap_path, *mapArranged);
-        }
-
-        // Path
-        set_nav_path(targetTf4x4, i, nav_path);
-        PosePublisher.publish(nav_path);
-
+        erasor::node node;
+        node.header.seq = i;
+        node.odom = erasor_utils::eigen2geoPose(poses[i]);
+        node.lidar = erasor_utils::cloud2msg(*srcCloud);
+        NodePublisher.publish(node);
         ros::spinOnce();
         loop_rate.sleep();
     }
+
+    updater.save_static_map(0.2);
+
+    cout<< "Static map building complete!" << endl;
+
     return 0;
 }

@@ -91,11 +91,7 @@ add_executable(offline_map_updater src/offline_map_updater/main_kitti.cpp ${eras
 target_link_libraries(offline_map_updater ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 add_dependencies(offline_map_updater erasor_generate_messages_cpp)
 
-add_executable(main_in_your_env src/offline_map_updater/main_in_your_env.cpp ${erasor_src})
-target_link_libraries(main_in_your_env ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
-add_dependencies(main_in_your_env erasor_generate_messages_cpp)
-
-add_executable(main_in_your_env_ros src/offline_map_updater/main_in_your_env_ros.cpp ${erasor_src})
+add_executable(main_in_your_env_ros src/offline_map_updater/main_in_your_env.cpp ${erasor_src})
 target_link_libraries(main_in_your_env_ros ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 add_dependencies(main_in_your_env_ros erasor_generate_messages_cpp)
 
