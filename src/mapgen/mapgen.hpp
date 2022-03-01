@@ -16,9 +16,8 @@ struct Cluster {
     uint32_t class_num;
 };
 
-struct RosbagParam{
-    int last_ts;
-};
+const char separator    = ' ';
+const int nameWidth     = 10;
 
 double calc_dist(Cluster d0, Cluster d1) {
     return sqrt(pow(d0.x - d1.x, 2) + pow(d0.y - d1.y, 2) + pow(d0.z - d1.z, 2));
@@ -189,10 +188,11 @@ public:
 
         is_large_scale = is_map_large_scale;
 
-        std::cout << "[MapGen]: Voxelization size - " << leafsize << std::endl;
-        std::cout << "[MapGen]: Target seq -  " << seq << std::endl;
-        std::cout << "[MapGen]: From " << init_stamp << ", " << final_stamp << std::endl;
-        std::cout << "[MapGen]: Is the map large-scale? " << is_large_scale << std::endl;
+        std::cout << "\033[1;32m";
+        std::cout << "[MAPGEN]: Voxelization size - " << leafsize << std::endl;
+        std::cout << "[MAPGEN]: Target seq -  " << seq << std::endl;
+        std::cout << "[MAPGEN]: From " << init_stamp << ", " << final_stamp << std::endl;
+        std::cout << "[MAPGEN]: Is the map large-scale? " << is_large_scale << "\033[0m" << std::endl;
     }
 
     void accumPointCloud(
@@ -232,7 +232,7 @@ public:
         pcl::transformPointCloud(cloud, *ptr_transformed, tf_lidar2origin);
 
         Eigen::Matrix4f pose = erasor_utils::geoPose2eigen(data.odom);
-        std::cout << "[Current Pose]: " << pose(0, 3) << ", " << ", " << pose(1, 3) << ", " << pose(2, 3) << std::endl;
+        std::cout << std::setprecision(3) << std::left << setw(nameWidth) << setfill(separator) << "=> [Pose] " << pose(0, 3) << ", " << pose(1, 3) << ", " << pose(2, 3) << std::endl;
         pcl::PointCloud<pcl::PointXYZI>::Ptr world_transformed(new pcl::PointCloud<pcl::PointXYZI>);
         pcl::transformPointCloud(*ptr_transformed, *world_transformed, pose);
 
@@ -270,7 +270,7 @@ public:
     void saveNaiveMap(const std::string& original_dir, const std::string& map_dir){
         pcl::PointCloud<pcl::PointXYZI> cloud_src;
 
-        std::cout << "\033[1;32m On saving point cloud...it may take few seconds...\033[0m" << std::endl;
+        std::cout << "\033[1;32m On saving map cloud...it may take few seconds...\033[0m" << std::endl;
         if (is_large_scale){
             // Prvious submaps
             for (const auto & submap: cloud_maps){
@@ -299,7 +299,8 @@ public:
         std::cout << "[Debug]: " << cloud_out.width << ", " << cloud_out.height << ", " << cloud_out.points.size() << std::endl;
         std::cout << "\033[1;32m Saving the map to pcd...\033[0m" << std::endl;
         pcl::io::savePCDFileASCII(map_dir, cloud_out);
-        std::cout << "\033[1;32m Complete to save the map!\033[0m" << std::endl;
+        std::cout << "\033[1;32m Complete to save the map!:";
+        std::cout << map_dir << "\033[0m" << std::endl;
 
     }
 };

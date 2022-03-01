@@ -16,9 +16,9 @@ We provide all contents including
 
 So enjoy our codes! :)
 
-Contact: Hyungtae Lim (shapelim@kaist.ac.kr)
+Contact: Hyungtae Lim (shapelim`at`kaist`dot`ac`dot`kr)
 
-Advisor: Hyun Myung (hmyung@kaist.ac.kr)
+Advisor: Hyun Myung (hmyung`at`kaist`dot`ac`dot`kr)
 
 ## NEWS (Recent update: Oct., 2021) 
 - An example of running ERASOR in your own env. is provided.
@@ -52,12 +52,12 @@ sudo apt-get install ros-melodic-jsk-common-msgs
 sudo apt-get install ros-melodic-jsk-rviz-plugins
 ```
 
-#### Buildg Our Package 
+#### Build Our Package 
 - Thereafter, compile this package. We use [catkin tools](https://catkin-tools.readthedocs.io/en/latest/),
 ```bash
 mkdir -p ~/catkin_ws/src
 cd ~/catkin_ws/src
-git clone https://github.com/LimHyungTae/ERASOR.Official.git
+git clone https://github.com/LimHyungTae/ERASOR.git
 cd .. && catkin build erasor 
 ```
  
@@ -115,7 +115,7 @@ roscore # (Optional)
 roslaunch erasor mapgen.launch
 rosbag play 05_2350_to_2670_w_interval_2_node.bag
 ```
-* Then, dense map and voxelized map are auto-saved at the `save path`. Note that the dense map is used to fill corresponding labels. The voxelized map will be an input of step 2 as a naively accumulated map.
+* Then, dense map and voxelized map are auto-saved at the `save path`. Note that the dense map is used for evaluation to fill corresponding labels. The voxelized map will be an input of step 2 as a naively accumulated map.
 
 **Step 2. Run ERASOR**
 ![erasor](img/kitti05.gif)
@@ -127,8 +127,18 @@ rosbag play 05_2350_to_2670_w_interval_2_node.bag
 ```bash
 roscore # (Optional)
 roslaunch erasor run_erasor.launch target_seq:="05"
-rosbag play 05_2350_to_2672_w_interval_2_node.bag
+rosbag play 05_2350_to_2670_w_interval_2_node.bag
 ```
+**News (22.03.01): ** The submap module is employed to speed up when extracing map VOI.
+
+Plase check the below rosparams in `run_erasor.launch`:
+```
+<rosparam param="/large_scale/is_large_scale">true</rosparam>
+<rosparam param="/large_scale/submap_size">160.0</rosparam>
+```
+
+Note that appropriate `submap_size` is > 2 * max_range.
+
 * **IMPORTANT:** After finishing running ERASOR, run the following command to save the static map as a pcd file on another bash.
 * "0.2" denotes voxelization size.
 ```bash
@@ -215,7 +225,7 @@ Satellite map                 |  Pcd map by LIO-SAM
 ![](img/demo/bongeunsa_satellite.png) |  ![](img/demo/bongeunsa_map.png)
 
 
-When **running ERASOR in your own environments**, please refer to `src/offline_map_updater/erasor_main.cpp` file and `run_erasor_in_your_env.launch`.
+When **running ERASOR in your own environments**, please refer to `src/offline_map_updater/main_in_your_env.cpp` file and `run_erasor_in_your_env_vel16.launch`.
 
 You can learn how to set experimental setting by repeating our pre-set configurations. Please follow our instructions.
 
@@ -225,7 +235,7 @@ wget https://urserver.kaist.ac.kr/publicdata/erasor/bongeunsa_dataset.zip
 unzip bongeunsa_dataset.zip
 ```
 
-* Modify `data_dir` in `config/your_own_env.yaml` to be right directory for your machine, where `data_dir` consists of following components as follows:
+* Modify `data_dir`, `MapUpdater/initial_map_path`, and `MapUpdater/save_path` in `config/your_own_env_vel16.yaml` to be right directory for your machine, where `data_dir` should consist of following components as follows:
 
 ```
 `data_dir`
@@ -239,11 +249,11 @@ _____poses_lidar2body.csv
 _____...
 ```
 
-* Launch `launch/run_erasor_in_your_env.launch` as follows:
+* Next, launch `launch/run_erasor_in_your_env_vel16.launch` as follows:
 
  
 ```
-roslaunch erasor run_erasor_in_your_env.launch
+roslaunch erasor run_erasor_in_your_env_vel16.launch
 ```
 ### Results
 
@@ -255,8 +265,8 @@ roslaunch erasor run_erasor_in_your_env.launch
 ### Note: Setting appropriate parameters
 
 * As shown in `config`, depending on your own sensor configuration, parameters must be changed. In particular, `min_h` and `max_h`, and `th_bin_max_h` should be changed (note that `min_h` and `max_h`, and `th_bin_max_h` is w.r.t. your body frame of a query pcd file.) 
-* If you use a low-channel LiDAR sensor such as Velodyne Puck-16, `max_r` and `num_rings` must be set as smaller values like `config/your_own_env.yaml` to guarantee the estimated normal vector for each bin is considered to be orthogonal to the ground.
-* If over-ground estimation occurs for each bin, then reduce the value of `gf_dist_thr`.
+* If you use a low-channel LiDAR sensor such as Velodyne Puck-16, `max_r` and `num_rings` must be set as smaller values like `config/your_own_env_vel16.yaml` to guarantee the estimated normal vector for each bin is considered to be orthogonal to the ground.
+* If too many points are considered as ground points for each bin, then reduce the value of `gf_dist_thr`.
 
 
 ## Citation 

@@ -31,7 +31,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: curr_init
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -72,9 +72,7 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 999999
       Min Color: 0; 0; 0
-      Min Intensity: 0
       Name: curr_init
       Position Transformer: XYZ
       Queue Size: 10
@@ -102,9 +100,7 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 524540
       Min Color: 0; 0; 0
-      Min Intensity: 0
       Name: ground
       Position Transformer: XYZ
       Queue Size: 10
@@ -169,9 +165,7 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 459004
       Min Color: 0; 0; 0
-      Min Intensity: 0
       Name: rejected
       Position Transformer: XYZ
       Queue Size: 10
@@ -251,7 +245,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 26.09725570678711
+      Distance: 72.36974334716797
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -266,10 +260,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.9797978401184082
+      Pitch: 0.919797956943512
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.1599934101104736
+      Yaw: 3.2349934577941895
     Saved:
       - Class: rviz/Orbit
         Distance: 5.025652885437012
@@ -308,4 +302,4 @@ Window Geometry:
     collapsed: false
   Width: 1440
   X: 205
-  Y: 233
+  Y: 203

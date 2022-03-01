@@ -1,0 +1,11 @@
+<launch>
+<rosparam command="load" file="$(find erasor)/config/your_own_env_vel16.yaml" />
+
+<node name="main_in_your_env_ros" pkg="erasor" type="main_in_your_env_ros" output="screen">
+    <rosparam param="/large_scale/is_large_scale">true</rosparam>
+    <rosparam param="/large_scale/submap_size">40.0</rosparam>
+</node>
+<node name="rviz" pkg="rviz" type="rviz" args="-d $(find erasor)/rviz/erasor_map_in_your_env_v2.rviz"/>
+<node name="rviz_body" pkg="rviz" type="rviz" args="-d $(find erasor)/rviz/srt.rviz"/>
+
+</launch>

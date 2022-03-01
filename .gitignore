@@ -1,7 +1,19 @@
 cmake-build-release*
 cmake-build-debug*
-vscode*
-.idea*
+vscode/*
+.idea/*
+.idea/
+vscode/
+
+.codes/*
+.code/*
+.cmake/*
+
+build/*
+
+*bin
+*pcd
+
 # Created by https://www.gitignore.io/api/c++,code,cmake,eclipse
 # Edit at https://www.gitignore.io/?templates=c++,code,cmake,eclipse
 

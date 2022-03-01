@@ -147,6 +147,8 @@ namespace erasor {
         OfflineMapUpdater();
 
         ~OfflineMapUpdater();
+
+        void save_static_map(float voxel_size);
     };
 
 }

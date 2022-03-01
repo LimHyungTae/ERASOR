@@ -113,7 +113,7 @@ void OfflineMapUpdater::load_global_map() {
      * map_arranged     : Target cloud to be filtered via ERASOR
      */
 
-    cout<<"On loading naively accumulated map...it takes few seconds..."<<endl;
+    cout<<"[MapUpdater] On loading naively accumulated map...it takes few seconds..."<<endl;
     map_init_->reserve(NUM_PTS_LARGE_ENOUGH_FOR_MAP);
     map_arranged_->reserve(NUM_PTS_LARGE_ENOUGH_FOR_MAP);
     map_arranged_init_->reserve(NUM_PTS_LARGE_ENOUGH_FOR_MAP);
@@ -168,6 +168,10 @@ void OfflineMapUpdater::load_global_map() {
 
 void OfflineMapUpdater::callback_flag(const std_msgs::Float32::ConstPtr &msg) {
     std::cout << "Flag comes!" << std::endl;
+    save_static_map(msg->data);
+}
+
+void OfflineMapUpdater::save_static_map(float voxel_size) {
     // 1. Voxelization
     pcl::PointCloud<pcl::PointXYZI>::Ptr ptr_src(new pcl::PointCloud<pcl::PointXYZI>);
     ptr_src->reserve(num_pcs_init_);
@@ -179,15 +183,16 @@ void OfflineMapUpdater::callback_flag(const std_msgs::Float32::ConstPtr &msg) {
         *ptr_src = *map_arranged_;
     }
     pcl::PointCloud<pcl::PointXYZI> map_to_be_saved;
-    erasor_utils::voxelize_preserving_labels(ptr_src, map_to_be_saved, msg->data); // 0.05m is the criteria!
+    erasor_utils::voxelize_preserving_labels(ptr_src, map_to_be_saved, voxel_size); // 0.05m is the criteria!
     // 2. Save the cloudmap
     map_to_be_saved.width  = map_to_be_saved.points.size();
     map_to_be_saved.height = 1;
 
     std::cout << "\033[1;32mTARGET: " << save_path_ + "/" + data_name_ + "_result.pcd" << "\033[0m" << std::endl;
-    std::cout << "Voxelization operated with " << msg->data << " voxel size" << std::endl;
+    std::cout << "Voxelization operated with " << voxel_size << " voxel size" << std::endl;
     pcl::io::savePCDFileASCII(save_path_ + "/" + data_name_ + "_result.pcd", map_to_be_saved);
     std::cout << "\033[1;32mComplete to save the final static map\033[0m" << std::endl;
+
 }
 
 
