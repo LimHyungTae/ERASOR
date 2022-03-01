@@ -129,7 +129,7 @@ roscore # (Optional)
 roslaunch erasor run_erasor.launch target_seq:="05"
 rosbag play 05_2350_to_2670_w_interval_2_node.bag
 ```
-**News (22.03.01): ** The submap module is employed to speed up when extracing map VOI.
+**News (22.03.01):** The submap module is employed to speed up when extracing map VOI.
 
 Plase check the below rosparams in `run_erasor.launch`:
 ```
