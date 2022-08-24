@@ -49,13 +49,13 @@ deep_express:
 
 ## 결과
 
-![coex1](img/ERASOR_coex1.png)
+![coex1](imgs/ERASOR_coex1.png)
 
-![coex2](img/ERASOR_coex2.png)
+![coex2](imgs/ERASOR_coex2.png)
 
-![coex3](img/ERASOR_coex3.png)
+![coex3](imgs/ERASOR_coex3.png)
 
-![coex4](img/ERASOR_coex4.png)
+![coex4](imgs/ERASOR_coex4.png)
 
 
 
