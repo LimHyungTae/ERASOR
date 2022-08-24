@@ -274,10 +274,6 @@ void OfflineMapUpdater::callback_node(const de_msg::node::ConstPtr &msg) {
 
             publish(*ptr_query_viz, pub_debug_pc2_curr_);
             publish(*total_map_rejected_, pub_dynamic_arranged_);
-            std::cout << total_map_rejected_->points.size() << std::endl;
-            std::cout << total_map_rejected_->points.size() << std::endl;
-            std::cout << total_map_rejected_->points.size() << std::endl;
-            std::cout << total_map_rejected_->points.size() << std::endl;
             publish(*map_rejected_, pub_map_rejected_);
             publish(*query_rejected_, pub_curr_rejected_);
 
