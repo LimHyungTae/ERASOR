@@ -5,6 +5,13 @@ vscode/*
 .idea/
 vscode/
 
+ERASOR/cmake-build-release*
+ERASOR/cmake-build-debug*
+ERASOR/vscode/*
+ERASOR/.idea/*
+ERASOR/.idea/
+ERASOR/vscode/
+
 .codes/*
 .code/*
 .cmake/*

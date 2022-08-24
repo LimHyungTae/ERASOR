@@ -1,0 +1,37 @@
+erasor: 
+    max_range: 20.0
+    num_rings: 20
+    num_sectors: 60
+    min_h: -1.8 # [m] Note that it depends on the distance between body frame and ground contact point of mobile robots
+    max_h: 1.3 # [m] Note that it depends on the distance between body frame and ground contact point of mobile robots
+    th_bin_max_h: -1.0 # [m]
+    scan_ratio_threshold: 0.1 # The Larger, the more aggressive!!
+    minimum_num_pts: 10
+    rejection_ratio: 0
+    gf_dist_thr: 0.125
+    gf_iter: 3
+    gf_num_lpr: 12
+    gf_th_seeds_height: 0.25
+    version: 3 # 2: R-GPF / 3: R-GPF w/ blocking (not in paper)
+
+MapUpdater:
+    env: "outdoor"
+    save_path: "/home/shapelim/coex_est_static_map.pcd"
+    query_voxel_size: 0.2
+    map_voxel_size: 0.2  
+    voxelization_interval: 2
+    removal_interval: 4
+
+deep_express:
+    trans_diff_thr: 1.5 # unit: m
+    rot_diff_thr: 15.0 # unit: deg
+    sliding_window_size: 30 # I guess `trans_diff_thr` * `sliding_window_size` should be smaller than `submap_size`
+    # Params for saving the pcd map    
+    output_map_voxel_size: 0.2 
+    save_duration: 200 # unit: sec.
+
+tf:
+     lidar2body: [0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.0] # xyz q_x, q_y, q_z, q_w in order
+
+verbose: true
+
