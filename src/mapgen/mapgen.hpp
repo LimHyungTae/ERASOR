@@ -199,7 +199,7 @@ public:
             const erasor::node &data, nav_msgs::Path &path) {
         geometry_msgs::PoseStamped pose_stamped;
         pose_stamped.header          = data.header;
-        pose_stamped.header.frame_id = "/map";
+        pose_stamped.header.frame_id = "map";
         pose_stamped.pose            = data.odom;
 
         odom_path.header = pose_stamped.header;

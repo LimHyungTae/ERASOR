@@ -145,10 +145,10 @@ void ERASOR::voi2r_pod(
 
 void ERASOR::viz_pseudo_occupancy() {
     jsk_recognition_msgs::PolygonArray map_r_pod, curr_r_pod;
-    map_r_pod.header.frame_id = "/map";
+    map_r_pod.header.frame_id = "map";
     map_r_pod.header.stamp    = ros::Time::now();
 
-    curr_r_pod.header.frame_id = "/map";
+    curr_r_pod.header.frame_id = "map";
     curr_r_pod.header.stamp    = ros::Time::now();
 
     for (int theta = 0; theta < num_sectors; theta++) {
@@ -331,7 +331,7 @@ void ERASOR::get_outliers(
 // Color maybe changed
 void ERASOR::compare_vois_and_revert_ground(int frame) {
     jsk_recognition_msgs::PolygonArray poly_list;
-    poly_list.header.frame_id = "/map";
+    poly_list.header.frame_id = "map";
     poly_list.header.stamp    = ros::Time::now();
 
     int        dynamic_count;
@@ -437,7 +437,7 @@ void ERASOR::compare_vois_and_revert_ground(int frame) {
 // Retrieve piecewise with blocking!
 void ERASOR::compare_vois_and_revert_ground_w_block(int frame) {
     jsk_recognition_msgs::PolygonArray poly_list;
-    poly_list.header.frame_id = "/map";
+    poly_list.header.frame_id = "map";
     poly_list.header.stamp    = ros::Time::now();
 
     int dynamic_count;
