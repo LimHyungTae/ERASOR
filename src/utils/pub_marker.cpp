@@ -21,7 +21,7 @@ int main(int argc, char **argv)
     vizPublisher = nodeHandler.advertise<visualization_msgs::Marker>("/marker", 100);
 
     visualization_msgs::Marker cube_list;
-    cube_list.header.frame_id = "/map";
+    cube_list.header.frame_id = "map";
     cube_list.header.stamp = ros::Time::now();
     cube_list.ns = "cubes";
     cube_list.action = visualization_msgs::Marker::ADD;

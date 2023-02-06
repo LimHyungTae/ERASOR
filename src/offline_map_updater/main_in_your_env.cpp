@@ -48,10 +48,10 @@ void load_all_poses(string txt, vector<Eigen::Matrix4f >& poses){
         Eigen::Translation3f ts(pose[2], pose[3], pose[4]);
         Eigen::Quaternionf q(pose[8], pose[5], pose[6], pose[7]);
         Eigen::Matrix4f tf4x4_cam = Eigen::Matrix4f::Identity(); // Crucial!
-        tf4x4_cam.topLeftCorner<3, 3>(0, 0) = q.toRotationMatrix();
-        tf4x4_cam.topRightCorner(3, 1) = ts.vector();
-
+        tf4x4_cam.block<3, 3>(0, 0) = q.toRotationMatrix();
+        tf4x4_cam.block<3, 1>(0, 3) = ts.vector();
         Eigen::Matrix4f tf4x4_lidar = tf4x4_cam;
+        
         poses.emplace_back(tf4x4_lidar);
         count++;
     }

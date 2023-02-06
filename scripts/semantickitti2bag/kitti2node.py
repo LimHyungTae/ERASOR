@@ -313,7 +313,7 @@ def save_data2node(bag, kitti, kitti_type, initial_time):
 
             header = Header()
             header.seq = kitti.frame_range[count]
-            header.frame_id = "/map"
+            header.frame_id = "map"
             header.stamp = rospy.Time.from_sec(timestamp)
             fields = [PointField('x', 0, PointField.FLOAT32, 1),
                       PointField('y', 4, PointField.FLOAT32, 1),

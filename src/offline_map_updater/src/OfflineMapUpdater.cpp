@@ -469,7 +469,7 @@ void OfflineMapUpdater::set_path(
         const erasor::node &node, const Eigen::Matrix4f &body2mapprev) {
     geometry_msgs::PoseStamped pose_stamped;
     pose_stamped.header          = node.header;
-    pose_stamped.header.frame_id = "/map";
+    pose_stamped.header.frame_id = "map";
     pose_stamped.pose            = erasor_utils::eigen2geoPose(body2mapprev);
 
     path.header = pose_stamped.header;
@@ -479,7 +479,7 @@ void OfflineMapUpdater::set_path(
 void OfflineMapUpdater::publish(
         const sensor_msgs::PointCloud2 &map,
         const ros::Publisher &publisher) {
-    pc2_map_.header.frame_id = "/map";
+    pc2_map_.header.frame_id = "map";
     publisher.publish(map);
     if (verbose_) ROS_INFO_STREAM("PC2 is Published!");
 }
@@ -488,6 +488,6 @@ void OfflineMapUpdater::publish(
         const pcl::PointCloud<pcl::PointXYZI> &map,
         const ros::Publisher &publisher) {
     pcl::toROSMsg(map, pc2_map_);
-    pc2_map_.header.frame_id = "/map";
+    pc2_map_.header.frame_id = "map";
     publisher.publish(pc2_map_);
 }
