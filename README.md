@@ -297,7 +297,8 @@ The launch file loads `config/your_own_env_vel16.yaml`, starts `main_in_your_env
 ![](img/demo/region_B_gif.gif)
 
 
-### Note: Setting appropriate parameters
+<details>
+<summary><b>📐 Setting appropriate parameters (per-sensor tuning notes — click to expand)</b></summary>
 
 * **Per-sensor geometry** — depending on the LiDAR you use, `max_range`, `num_rings`, and `num_sectors` need to be changed so that each angular bin still contains enough points to fit a ground plane. For a low-channel LiDAR (e.g. Velodyne Puck-16), use small values similar to `config/your_own_env_vel16.yaml` (`max_range: 9.5`, `num_rings: 8`, `num_sectors: 60`); for 64-channel SemanticKITTI we use 60–80 m, 15–20 rings, 60–108 sectors.
 * **Vertical thresholds** — set `min_h` / `max_h` to your body-frame VoI extents (see §2 above) and tune `th_bin_max_h` (a height delta above the per-bin ground) to whatever stops dynamic-but-tall obstacles from being reverted as ground. Typical values are 0.05 – 0.20 m.
@@ -305,13 +306,19 @@ The launch file loads `config/your_own_env_vel16.yaml`, starts `main_in_your_env
 * **Aggressiveness** — `scan_ratio_threshold` is the single most impactful knob (higher = more aggressive removal). Sweep it over `{0.10, 0.15, 0.20, 0.25, 0.30}` and pick the F1 maximum; lowering also helps when you see static points being deleted (false positives). The KITTI configs in `config/seq_*.yaml` are a calibrated starting point per environment type (intersection, highway, countryside).
 * **Intensity carries the label.** The pipeline assumes each input point's `intensity` field encodes the SemanticKITTI semantic label (`uint32` reinterpreted as `float32`). If you only want the static map output and don't care about PR/RR, set `intensity = 0` everywhere — ERASOR will still run, but `scripts/analysis_runner.py` won't have ground-truth labels to compare against.
 
-### Common pitfalls when bringing your own data
+</details>
+
+
+<details>
+<summary><b>⚠️ Common pitfalls when bringing your own data (click to expand)</b></summary>
 
 1. **Wrong pose convention** → static map appears rotated or offset by tens of metres. Sanity-check by overlaying `pose_0 · pcds/000000.pcd` on `dense_global_map.pcd` in CloudCompare. Most points should sit within `0.5 × voxel_size` of the dense map (see `scripts/analysis_runner.py` for an automated overlap check we use on KITTI).
 2. **Mismatched units** between the dense map (`.pcd`) and the per-frame scans (e.g. one is in meters, the other in millimetres). All inputs must be in metres.
 3. **`pcds/` indices not starting at 0 / not contiguous.** The driver reads `pcds/000000.pcd`, `000001.pcd`, … sequentially. Missing frames will be skipped silently. Use `--init_idx N` if your sequence starts later.
 4. **Labels in `intensity` get cast incorrectly.** ERASOR stores `uint32` labels inside a `float32` field via byte reinterpretation. If you write the labels as a float number (e.g. `intensity = 252.0` for a moving car), the C++ side will not parse the label — encode them via `np.float32(np.uint32(label).view(np.float32))` (see `scripts/semantickitti2bag/README.md`).
 5. **Dense map and scans use different lidar-to-body offsets.** If your dense map was accumulated by an external SLAM (e.g. LIO-SAM) using a slightly different extrinsic than the one you put in `tf/lidar2body`, the input/output frames disagree. Re-run mapgen with the same extrinsic the live pipeline will see.
+
+</details>
 
 
 ## Citation 
