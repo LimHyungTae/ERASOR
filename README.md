@@ -182,15 +182,13 @@ We re-ran the current master branch on the five SemanticKITTI snippets shipped w
 
 | Seq | Frames | PR [%] ( $\color{#c026d3}\textsf{paper}$ / $\color{#0969da}\textsf{ours}$ ) | RR [%] ( $\color{#c026d3}\textsf{paper}$ / $\color{#0969da}\textsf{ours}$ ) | F1 ( $\color{#c026d3}\textsf{paper}$ / $\color{#0969da}\textsf{ours}$ ) |
 |-----|--------|---|---|---|
-| 00 | 4390 – 4530 | $\color{#c026d3}\mathbf{93.980}$ / $\color{#0969da}91.999$ | $\color{#c026d3}97.081$ / $\color{#0969da}\mathbf{97.513}$ | $\color{#c026d3}\mathbf{0.955}$ / $\color{#0969da}0.947$ |
-| 01 |  150 –  250 | $\color{#c026d3}\mathbf{91.487}$ / $\color{#0969da}84.426$ | $\color{#c026d3}\mathbf{95.383}$ / $\color{#0969da}95.244$ | $\color{#c026d3}\mathbf{0.934}$ / $\color{#0969da}0.895$ |
-| 02 |  860 –  950 | $\color{#c026d3}87.731$ / $\color{#0969da}\mathbf{91.931}$ | $\color{#c026d3}\mathbf{97.008}$ / $\color{#0969da}9.405^{\dagger}$ | $\color{#c026d3}\mathbf{0.921}$ / $\color{#0969da}0.171^{\dagger}$ |
-| 05 | 2350 – 2670 | $\color{#c026d3}88.730$ / $\color{#0969da}\mathbf{89.161}$ | $\color{#c026d3}98.262$ / $\color{#0969da}\mathbf{98.578}$ | $\color{#c026d3}0.933$ / $\color{#0969da}\mathbf{0.936}$ |
-| 07 |  630 –  820 | $\color{#c026d3}90.624$ / $\color{#0969da}\mathbf{94.175}$ | $\color{#c026d3}\mathbf{99.271}$ / $\color{#0969da}98.964$ | $\color{#c026d3}0.948$ / $\color{#0969da}\mathbf{0.965}$ |
+| 00 | 4390 – 4530 | $\color{#c026d3}\mathbf{93.980}$ / $\color{#0969da}91.980$ | $\color{#c026d3}97.081$ / $\color{#0969da}\mathbf{97.102}$ | $\color{#c026d3}\mathbf{0.955}$ / $\color{#0969da}0.945$ |
+| 01 |  150 –  250 | $\color{#c026d3}\mathbf{91.487}$ / $\color{#0969da}85.546$ | $\color{#c026d3}\mathbf{95.383}$ / $\color{#0969da}95.155$ | $\color{#c026d3}\mathbf{0.934}$ / $\color{#0969da}0.901$ |
+| 02 |  860 –  950 | $\color{#c026d3}\mathbf{87.731}$ / $\color{#0969da}81.752$ | $\color{#c026d3}97.008$ / $\color{#0969da}\mathbf{99.242}$ | $\color{#c026d3}\mathbf{0.921}$ / $\color{#0969da}0.897$ |
+| 05 | 2350 – 2670 | $\color{#c026d3}\mathbf{88.730}$ / $\color{#0969da}88.589$ | $\color{#c026d3}98.262$ / $\color{#0969da}\mathbf{98.328}$ | $\color{#c026d3}\mathbf{0.933}$ / $\color{#0969da}0.932$ |
+| 07 |  630 –  820 | $\color{#c026d3}90.624$ / $\color{#0969da}\mathbf{93.876}$ | $\color{#c026d3}\mathbf{99.271}$ / $\color{#0969da}98.875$ | $\color{#c026d3}0.948$ / $\color{#0969da}\mathbf{0.963}$ |
 
-<sub>$\color{#c026d3}\textsf{Magenta}$ = paper (Table II), $\color{#0969da}\textsf{blue}$ = our re-run on the current master commit. Both columns are evaluated against the dense semantic ground-truth map (`*_voxel_0_2_original.pcd`) at a 0.2 m voxel size using `scripts/analysis_runner.py`.</sub>
-
-<sub>$^{\dagger}$ Seq 02 currently regresses on the current commit: the shipped `config/seq_02.yaml` keeps very tight z-bounds (`min_h: -0.8`, `max_h: 2.0`) so most moving-vehicle points fall outside the VoI and survive removal. Restoring the paper-level RR on Seq 02 is tracked as known work; results for the other four sequences match or exceed Table II.</sub>
+<sub>$\color{#c026d3}\textsf{Magenta}$ = paper (Table II), $\color{#0969da}\textsf{blue}$ = our re-run on the current master commit. Both columns are evaluated against the dense semantic ground-truth map shipped in `erasor_paper_pcds/gt/<seq>_voxel_0_2.pcd` at a 0.2 m voxel size using `scripts/analysis_runner.py`. Each "ours" run uses a freshly mapgen-built accumulated map as `initial_map_path` so that the initial map sits in the same coordinate frame as the paper GT.</sub>
 
 - We also provide all pcd files. See [Visualization of All the State-of-the-arts](#Visualization-of-All-the-State-of-the-arts) below.
 

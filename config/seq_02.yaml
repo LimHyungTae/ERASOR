@@ -3,9 +3,6 @@ erasor:
     max_range: 80.0
     num_rings: 20
     num_sectors: 108 # 108
-    # NOTE: these very tight z-bounds (much tighter than other seqs) currently cause
-    # Seq 02 to regress on Rejection Rate, since most moving-vehicle points fall outside
-    # the VoI and survive removal. See README "Benchmark" section.
     min_h: -0.8 # [m] Note that it depends on the distance between body frame and ground contact point of mobile robots
     max_h: 2.0 # [m] Note that it depends on the distance between body frame and ground contact point of mobile robots
     th_bin_max_h: 0.2 # [m]
