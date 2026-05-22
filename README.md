@@ -22,6 +22,7 @@ Advisor: Hyun Myung (hmyung`at`kaist`dot`ac`dot`kr)
 
 ## NEWS
 
+- **🎉 ERASOR2 is now available!** Check out the successor at [**url-kaist/ERASOR2**](https://github.com/url-kaist/ERASOR2) — a ROS-free, pure-CMake C++ rewrite with a Python evaluator and improved benchmarks. If you're starting a new project, we recommend ERASOR2.
 - **2026-05**: Per-seq KITTI configs re-tuned against paper Table II; main-README and `scripts/semantickitti2bag/README.md` rewrites; expanded "ERASOR in the Wild" section with coordinate-frame cautions and a non-KITTI pitfall checklist.
 - **2021-10**: An example of running ERASOR in your own env is provided — see `src/offline_map_updater/main_in_your_env.cpp` and `launch/run_erasor_in_your_env_vel16.launch`. Details under [ERASOR in the Wild](#ERASOR-in-the-Wild).
 ---
