@@ -18,7 +18,7 @@ erasor:
 
 
 MapUpdater:
-    data_type: "01"
+    data_name: "01"
     initial_map_path: "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/src_v2/01_150_to_250_w_interval1__voxel_0_2.pcd"
     env: "outdoor"
     save_path: "/media/shapelim/UX960NVMe1/kitti_semantic/semantic_KITTI_map/erasor_v2"
