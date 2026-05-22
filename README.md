@@ -20,9 +20,10 @@ Contact: Hyungtae Lim (shapelim`at`kaist`dot`ac`dot`kr)
 
 Advisor: Hyun Myung (hmyung`at`kaist`dot`ac`dot`kr)
 
-## NEWS (Recent update: Oct., 2021) 
-- An example of running ERASOR in your own env. is provided.
-    - Please refer to please refer to `src/offline_map_updater/main_in_your_env.cpp` and `launch/run_erasor_in_your_env_vel16.launch`. The more details are  [here](#ERASOR-in-the-Wild).
+## NEWS
+
+- **2026-05**: Per-seq KITTI configs re-tuned against paper Table II; main-README and `scripts/semantickitti2bag/README.md` rewrites; expanded "ERASOR in the Wild" section with coordinate-frame cautions and a non-KITTI pitfall checklist.
+- **2021-10**: An example of running ERASOR in your own env is provided — see `src/offline_map_updater/main_in_your_env.cpp` and `launch/run_erasor_in_your_env_vel16.launch`. Details under [ERASOR in the Wild](#ERASOR-in-the-Wild).
 ---
 
 ## Contents
@@ -230,36 +231,65 @@ Satellite map                 |  Pcd map by LIO-SAM
 ![](img/demo/bongeunsa_satellite.png) |  ![](img/demo/bongeunsa_map.png)
 
 
-When **running ERASOR in your own environments**, please refer to `src/offline_map_updater/main_in_your_env.cpp` file and `launch/run_erasor_in_your_env_vel16.launch`.
+When **running ERASOR in your own environments**, refer to `src/offline_map_updater/main_in_your_env.cpp` and `launch/run_erasor_in_your_env_vel16.launch`. The non-KITTI driver reads per-frame point clouds + a CSV of poses (instead of a rosbag of `node` messages) and feeds them to the same `OfflineMapUpdater`.
 
-You can learn how to set experimental setting by repeating our pre-set configurations. Please follow our instructions.
+You can learn how to set things up by reproducing our pre-set configuration first:
 
-* First, download pre-set dataset.
-```
+```bash
 wget https://urserver.kaist.ac.kr/publicdata/erasor/bongeunsa_dataset.zip
 unzip bongeunsa_dataset.zip
 ```
 
-* Modify `data_dir`, `MapUpdater/initial_map_path`, and `MapUpdater/save_path` in `config/your_own_env_vel16.yaml` to be right directory for your machine, where `data_dir` should consist of following components as follows:
+#### 1. Input layout
+
+Modify `data_dir`, `MapUpdater/initial_map_path`, and `MapUpdater/save_path` in `config/your_own_env_vel16.yaml` to point at your dataset. `data_dir` must contain:
 
 ```
-`data_dir`
-_____pcds
-     |___000000.pcd
-     |___000001.pcd
-     |___000002.pcd
-     |...
-_____dense_global_map.pcd
-_____poses_lidar2body.csv
-_____...
+<data_dir>/
+├── pcds/
+│   ├── 000000.pcd          # per-frame LiDAR scan (in the LiDAR's own frame)
+│   ├── 000001.pcd
+│   └── ...
+├── dense_global_map.pcd    # naively-accumulated map you want ERASOR to clean
+└── poses_lidar2body.csv    # one pose per frame (see format below)
 ```
 
-* Next, launch `launch/run_erasor_in_your_env_vel16.launch` as follows:
+`poses_lidar2body.csv` has **one header line** and one comma-separated row per frame. Each row has at least 9 columns; only columns 3–9 are used (0-indexed: `pose[2..8]`):
 
- 
 ```
+<ignored>, <ignored>, x, y, z, qx, qy, qz, qw
+```
+
+Indices 0–1 are reserved (we use them for timestamp / frame index but they aren't read). The CSV is parsed in `main_in_your_env.cpp` at `load_all_poses()`.
+
+> ❗ **NOTE — what the poses must represent.** The CSV name is historical and misleading. Each row is **`T_map_from_lidar`** — i.e. the transformation that takes a point in the LiDAR frame *of that specific scan* and places it directly into the map frame. Concretely, `pose_i · pcds/00000<i>.pcd` must overlay correctly on `dense_global_map.pcd`. Verify this before tuning anything else (an easy sanity check is to load the dense map and one transformed scan in CloudCompare or RViz — the static structures should overlay to within a few centimetres).
+
+#### 2. `tf/lidar2body` and the body frame
+
+`OfflineMapUpdater` exposes a separate `tf/lidar2body` extrinsic in the yaml (7 floats: `[x, y, z, qx, qy, qz, qw]`). It is applied to every query scan *before* the egocentric VoI is extracted:
+
+```
+body_cloud = tf_lidar2body · lidar_cloud
+map_cloud  = pose_i · body_cloud           # implicit: pose_i must be T_map_from_body in this convention
+```
+
+Two valid conventions:
+
+| Convention | `poses_lidar2body.csv` contains | `tf/lidar2body` should be |
+|---|---|---|
+| (A) "bake the offset into the poses" *(what the bongeunsa example uses)* | `T_map_from_lidar` (already includes the LiDAR-to-body offset, since body == lidar for ERASOR's purposes) | **identity** = `[0, 0, 0, 0, 0, 0, 1]` |
+| (B) "keep poses in body frame" | `T_map_from_body` | the actual LiDAR-to-body extrinsic of your robot |
+
+> ❗ **NOTE — body frame defines `min_h` / `max_h`.** ERASOR's vertical thresholds (`min_h`, `max_h`, `th_bin_max_h`) are measured **in the body frame after `tf/lidar2body` is applied**. If your body frame's Z axis points up and Z = 0 sits at the LiDAR mount, then for a robot whose LiDAR is 1.6 m above the ground, you want `min_h ≈ -1.6` (ground level) and `max_h ≈ 1.5` (head clearance). If the resulting static map is tilted, shifted, or you see *no* ground retrieval, the most likely cause is a mismatch in convention (A vs B) — pick one and stick to it.
+
+#### 3. Launch
+
+```bash
 roslaunch erasor run_erasor_in_your_env_vel16.launch
 ```
+
+The launch file loads `config/your_own_env_vel16.yaml`, starts `main_in_your_env_ros`, and opens two RViz views. After the last frame is processed the static map is saved to `~/staticmap_via_erasor.pcd`.
+
 ### Results
 
 ![](img/demo/region_A_gif.gif)
@@ -267,11 +297,28 @@ roslaunch erasor run_erasor_in_your_env_vel16.launch
 ![](img/demo/region_B_gif.gif)
 
 
-### Note: Setting appropriate parameters
+<details>
+<summary><b>📐 Setting appropriate parameters (per-sensor tuning notes — click to expand)</b></summary>
 
-* As shown in `config`, depending on your own sensor configuration, parameters must be changed. In particular, `min_h` and `max_h`, and `th_bin_max_h` should be changed (note that `min_h` and `max_h`, and `th_bin_max_h` is w.r.t. your body frame of a query pcd file.) 
-* If you use a low-channel LiDAR sensor such as Velodyne Puck-16, `max_r` and `num_rings` must be set as smaller values like `config/your_own_env_vel16.yaml` to guarantee the estimated normal vector for each bin is considered to be orthogonal to the ground.
-* If too many points are considered as ground points for each bin, then reduce the value of `gf_dist_thr`.
+* **Per-sensor geometry** — depending on the LiDAR you use, `max_range`, `num_rings`, and `num_sectors` need to be changed so that each angular bin still contains enough points to fit a ground plane. For a low-channel LiDAR (e.g. Velodyne Puck-16), use small values similar to `config/your_own_env_vel16.yaml` (`max_range: 9.5`, `num_rings: 8`, `num_sectors: 60`); for 64-channel SemanticKITTI we use 60–80 m, 15–20 rings, 60–108 sectors.
+* **Vertical thresholds** — set `min_h` / `max_h` to your body-frame VoI extents (see §2 above) and tune `th_bin_max_h` (a height delta above the per-bin ground) to whatever stops dynamic-but-tall obstacles from being reverted as ground. Typical values are 0.05 – 0.20 m.
+* **Ground filter** — if too many points are classified as ground, reduce `gf_dist_thr` (the plane-fit inlier distance). If the ground filter misses obvious flat ground, raise it.
+* **Aggressiveness** — `scan_ratio_threshold` is the single most impactful knob (higher = more aggressive removal). Sweep it over `{0.10, 0.15, 0.20, 0.25, 0.30}` and pick the F1 maximum; lowering also helps when you see static points being deleted (false positives). The KITTI configs in `config/seq_*.yaml` are a calibrated starting point per environment type (intersection, highway, countryside).
+* **Intensity carries the label.** The pipeline assumes each input point's `intensity` field encodes the SemanticKITTI semantic label (`uint32` reinterpreted as `float32`). If you only want the static map output and don't care about PR/RR, set `intensity = 0` everywhere — ERASOR will still run, but `scripts/analysis_runner.py` won't have ground-truth labels to compare against.
+
+</details>
+
+
+<details>
+<summary><b>⚠️ Common pitfalls when bringing your own data (click to expand)</b></summary>
+
+1. **Wrong pose convention** → static map appears rotated or offset by tens of metres. Sanity-check by overlaying `pose_0 · pcds/000000.pcd` on `dense_global_map.pcd` in CloudCompare. Most points should sit within `0.5 × voxel_size` of the dense map (see `scripts/analysis_runner.py` for an automated overlap check we use on KITTI).
+2. **Mismatched units** between the dense map (`.pcd`) and the per-frame scans (e.g. one is in meters, the other in millimetres). All inputs must be in metres.
+3. **`pcds/` indices not starting at 0 / not contiguous.** The driver reads `pcds/000000.pcd`, `000001.pcd`, … sequentially. Missing frames will be skipped silently. Use `--init_idx N` if your sequence starts later.
+4. **Labels in `intensity` get cast incorrectly.** ERASOR stores `uint32` labels inside a `float32` field via byte reinterpretation. If you write the labels as a float number (e.g. `intensity = 252.0` for a moving car), the C++ side will not parse the label — encode them via `np.float32(np.uint32(label).view(np.float32))` (see `scripts/semantickitti2bag/README.md`).
+5. **Dense map and scans use different lidar-to-body offsets.** If your dense map was accumulated by an external SLAM (e.g. LIO-SAM) using a slightly different extrinsic than the one you put in `tf/lidar2body`, the input/output frames disagree. Re-run mapgen with the same extrinsic the live pipeline will see.
+
+</details>
 
 
 ## Citation 
