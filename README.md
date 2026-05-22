@@ -82,6 +82,9 @@ wget https://urserver.kaist.ac.kr/publicdata/erasor/rosbag/02_860_to_950_w_inter
 wget https://urserver.kaist.ac.kr/publicdata/erasor/rosbag/05_2350_to_2670_w_interval_2_node.bag
 wget https://urserver.kaist.ac.kr/publicdata/erasor/rosbag/07_630_to_820_w_interval_2_node.bag
 ```
+
+> **NOTE!** The rosbags above assume that the per-frame poses are estimated by **SuMa** (Behley & Stachniss, RSS 2018). As stated in §III.A of the paper, "Maps are constructed at the regular intervals with the poses provided by SuMa, which contains inherent uncertainty." If you regenerate any bag from raw SemanticKITTI data via `scripts/semantickitti2bag/`, copy `sequences/<seq>/poses_suma_optim.txt` to `sequences/<seq>/poses.txt` first so that `pykitti.odometry.load_poses()` picks up the SuMa poses; otherwise the resulting map will not align with the shipped ground-truth PCDs.
+
 #### Description of Preprocessed Rosbag Files
 
 - Please note that the rosbag consists of `node`. Refer to `msg/node.msg`.
@@ -178,13 +181,13 @@ python analysis.py --gt /home/shapelim/erasor_paper_pcds/gt/05_voxel_0_2.pcd --e
 
 ## Benchmark
 
-We re-ran the current master branch on the five SemanticKITTI snippets shipped with this repo and compared the resulting Preservation Rate (PR), Rejection Rate (RR), and F1 against the original Table II of the paper. **Bold** marks the higher value per cell.
+We re-ran the current master branch on the five SemanticKITTI snippets shipped with this repo (after re-tuning `config/seq_{00,02}.yaml`) and compared the resulting Preservation Rate (PR), Rejection Rate (RR), and F1 against the original Table II of the paper. **Bold** marks the higher value per cell.
 
 | Seq | Frames | PR [%] ( $\color{#c026d3}\textsf{paper}$ / $\color{#0969da}\textsf{ours}$ ) | RR [%] ( $\color{#c026d3}\textsf{paper}$ / $\color{#0969da}\textsf{ours}$ ) | F1 ( $\color{#c026d3}\textsf{paper}$ / $\color{#0969da}\textsf{ours}$ ) |
 |-----|--------|---|---|---|
-| 00 | 4390 – 4530 | $\color{#c026d3}\mathbf{93.980}$ / $\color{#0969da}91.980$ | $\color{#c026d3}97.081$ / $\color{#0969da}\mathbf{97.102}$ | $\color{#c026d3}\mathbf{0.955}$ / $\color{#0969da}0.945$ |
-| 01 |  150 –  250 | $\color{#c026d3}\mathbf{91.487}$ / $\color{#0969da}85.546$ | $\color{#c026d3}\mathbf{95.383}$ / $\color{#0969da}95.155$ | $\color{#c026d3}\mathbf{0.934}$ / $\color{#0969da}0.901$ |
-| 02 |  860 –  950 | $\color{#c026d3}\mathbf{87.731}$ / $\color{#0969da}81.752$ | $\color{#c026d3}97.008$ / $\color{#0969da}\mathbf{99.242}$ | $\color{#c026d3}\mathbf{0.921}$ / $\color{#0969da}0.897$ |
+| 00 | 4390 – 4530 | $\color{#c026d3}93.980$ / $\color{#0969da}\mathbf{95.790}$ | $\color{#c026d3}\mathbf{97.081}$ / $\color{#0969da}95.642$ | $\color{#c026d3}0.955$ / $\color{#0969da}\mathbf{0.957}$ |
+| 01 |  150 –  250 | $\color{#c026d3}91.487$ / $\color{#0969da}\mathbf{91.890}$ | $\color{#c026d3}\mathbf{95.383}$ / $\color{#0969da}94.777$ | $\color{#c026d3}\mathbf{0.934}$ / $\color{#0969da}0.933$ |
+| 02 |  860 –  950 | $\color{#c026d3}\mathbf{87.731}$ / $\color{#0969da}87.136$ | $\color{#c026d3}97.008$ / $\color{#0969da}\mathbf{99.337}$ | $\color{#c026d3}0.921$ / $\color{#0969da}\mathbf{0.928}$ |
 | 05 | 2350 – 2670 | $\color{#c026d3}\mathbf{88.730}$ / $\color{#0969da}88.589$ | $\color{#c026d3}98.262$ / $\color{#0969da}\mathbf{98.328}$ | $\color{#c026d3}\mathbf{0.933}$ / $\color{#0969da}0.932$ |
 | 07 |  630 –  820 | $\color{#c026d3}90.624$ / $\color{#0969da}\mathbf{93.876}$ | $\color{#c026d3}\mathbf{99.271}$ / $\color{#0969da}98.875$ | $\color{#c026d3}0.948$ / $\color{#0969da}\mathbf{0.963}$ |
 
